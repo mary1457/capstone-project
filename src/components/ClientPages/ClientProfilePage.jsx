@@ -1,8 +1,8 @@
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Modal, InputGroup, Form } from 'react-bootstrap';
 import { FaHeart, FaUser, FaLock, FaPen, FaEnvelope } from 'react-icons/fa';
-import React, { useEffect } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfile, updateProfile, deleteProfile , setField } from '../../redux/actions/utenteActions'; 
+import { getProfile, updateProfile, deleteProfile, setField } from '../../redux/actions/utenteActions';
 import { useNavigate } from 'react-router-dom';
 
 const ClientProfilePage = () => {
@@ -12,6 +12,9 @@ const ClientProfilePage = () => {
 
   const accessToken = useSelector((state) => state.accessToken.accessToken);
   const navigate = useNavigate();
+
+  
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(getProfile(accessToken));
@@ -24,14 +27,13 @@ const ClientProfilePage = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    console.log(e.target)
-    dispatch(setField({ id, value })); 
+    dispatch(setField({ id, value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Dispatch your update profile action here if you want to save changes
     dispatch(updateProfile(profileform, accessToken));
+    setShowModal(false); 
   };
 
   return (
@@ -52,7 +54,7 @@ const ClientProfilePage = () => {
               <Card.Title>{profile.name}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">Card subtitle</Card.Subtitle>
               <div className="d-flex justify-content-center mt-2">
-                <Button variant="primary" className="me-2">
+                <Button variant="primary" className="me-2" onClick={() => setShowModal(true)}>
                   Edit
                 </Button>
                 <Button variant="danger" onClick={handleDelete}>
@@ -63,69 +65,68 @@ const ClientProfilePage = () => {
           </Card>
         </Col>
 
-        {/* Modal Statico */}
-        <Col xs={12} md={8} lg={6} xl={4}>
-          <div className="static-modal">
-            <Modal.Dialog>
-              <Modal.Body>
-                <Form id="register-form" onSubmit={handleSubmit}>
-                  {/* Campo Nome */}
-                  <Form.Group className="mb-3" controlId="name">
-                    <InputGroup>
-                      <Form.Control
-                        type="text"
-                        placeholder="Name"
-                        value={profileform.name }
-                        onChange={handleChange}
-                        required
-                      />
-                      <InputGroup.Text>
-                        <FaUser />
-                      </InputGroup.Text>
-                    </InputGroup>
-                  </Form.Group>
+        {/* Modale dinamico */}
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form id="register-form" onSubmit={handleSubmit}>
+              {/* Campo Nome */}
+              <Form.Group className="mb-3" controlId="name">
+                <InputGroup>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    value={profileform.name}
+                    onChange={handleChange}
+                    required
+                  />
+                  <InputGroup.Text>
+                    <FaUser />
+                  </InputGroup.Text>
+                </InputGroup>
+              </Form.Group>
 
-                  {/* Campo Cognome */}
-                  <Form.Group className="mb-3" controlId="surname">
-                    <InputGroup>
-                      <Form.Control
-                        type="text"
-                        placeholder="Surname"
-                        value={profileform.surname }
-                        onChange={handleChange}
-                        required
-                      />
-                      <InputGroup.Text>
-                        <FaPen />
-                      </InputGroup.Text>
-                    </InputGroup>
-                  </Form.Group>
+              {/* Campo Cognome */}
+              <Form.Group className="mb-3" controlId="surname">
+                <InputGroup>
+                  <Form.Control
+                    type="text"
+                    placeholder="Surname"
+                    value={profileform.surname}
+                    onChange={handleChange}
+                    required
+                  />
+                  <InputGroup.Text>
+                    <FaPen />
+                  </InputGroup.Text>
+                </InputGroup>
+              </Form.Group>
 
-                  {/* Campo Email */}
-                  <Form.Group className="mb-3" controlId="email">
-                    <InputGroup>
-                      <Form.Control
-                        type="email"
-                        placeholder="Email"
-                        value={profileform.email }
-                        onChange={handleChange}
-                        required
-                      />
-                      <InputGroup.Text>
-                        <FaEnvelope />
-                      </InputGroup.Text>
-                    </InputGroup>
-                  </Form.Group>
+              {/* Campo Email */}
+              <Form.Group className="mb-3" controlId="email">
+                <InputGroup>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    value={profileform.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  <InputGroup.Text>
+                    <FaEnvelope />
+                  </InputGroup.Text>
+                </InputGroup>
+              </Form.Group>
 
-                  {/* Bottone per inviare il form */}
-                  <Button variant="primary" type="submit" className="w-100 mb-2">
-                    Update
-                  </Button>
-                </Form>
-              </Modal.Body>
-            </Modal.Dialog>
-          </div>
-        </Col>
+              {/* Bottone per inviare il form */}
+              <Button variant="primary" type="submit" className="w-100 mb-2">
+                Update
+              </Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
       </Row>
     </Container>
   );

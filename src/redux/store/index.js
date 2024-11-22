@@ -4,7 +4,7 @@ import utenteReducer from '../reducers/utenteReducer'
 import centroEsteticoReducer from '../reducers/centroEsteticoReducer'
 import accessTokenReducer from '../reducers/accessTokenReducer'
 import cardReducer from '../reducers/cardReducer'
-
+import prenotazioniReducer from '../reducers/prenotazioniReducer'
 
 
 const bigReducer = combineReducers({
@@ -12,6 +12,7 @@ const bigReducer = combineReducers({
   utente: utenteReducer,
   centroEstetico: centroEsteticoReducer,
  card: cardReducer,
+ prenotazioni: prenotazioniReducer
 })
 
 const store = configureStore({

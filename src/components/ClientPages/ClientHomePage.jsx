@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Form, Card, Button, InputGroup } from "react-bootstrap";
-import { FaSearch, FaMapMarkerAlt, FaHeart } from "react-icons/fa";
+import { FaSearch, FaMapMarkerAlt, FaHeart,  } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   setField,
@@ -54,47 +54,60 @@ const ClientHomePage = () => {
   return (
     <Container fluid className="p-4">
       <Row className="mb-4">
-        <Form id="search-form" onSubmit={handleSubmit}>
-          <Col xs={12} md={10}>
-            <Form.Group controlId="trattamenti" className="mb-3">
-              <InputGroup>
-                <InputGroup.Text>
-                  <FaSearch />
-                </InputGroup.Text>
-                <Form.Select
-                  aria-label="Seleziona un trattamento"
-                  value={searchData.trattamenti}
-                  onChange={handleChange}
-                >
-                  <option value="">Scegli un trattamento</option>
-                  <option value="LASER">LASER</option>
-                  <option value="DEPILAZIONE">DEPILAZIONE</option>
-                </Form.Select>
-              </InputGroup>
-            </Form.Group>
-          </Col>
-          <Col xs={12} md={10}>
-            <Form.Group className="mb-3" controlId="city">
-              <InputGroup>
-                <InputGroup.Text>
-                  <FaMapMarkerAlt />
-                </InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Inserisci una città"
-                  value={searchData.city}
-                  onChange={handleChange}
-                  required
-                />
-              </InputGroup>
-            </Form.Group>
-          </Col>
-          <Col xs={12} md={2}>
-            <Button variant="primary" type="submit" className="w-100 mb-2">
-              Cerca
-            </Button>
-          </Col>
-        </Form>
+      <Form id="search-form" onSubmit={handleSubmit}>
+  <Col xs={12} md={10}>
+    <Form.Group controlId="trattamenti" className="mb-3">
+      <InputGroup>
+        <InputGroup.Text>
+          <FaSearch />
+        </InputGroup.Text>
+        <Form.Select
+          aria-label="Seleziona un trattamento"
+          value={searchData.trattamenti}
+          onChange={handleChange}
+        >
+          <option value="">Scegli un trattamento</option>
+          <option value="LASER">LASER</option>
+          <option value="DEPILAZIONE">DEPILAZIONE</option>
+        </Form.Select>
+      </InputGroup>
+    </Form.Group>
+  </Col>
+  <Col xs={12} md={10}>
+    <Form.Group className="mb-3" controlId="city">
+      <InputGroup>
+        <InputGroup.Text>
+          <FaMapMarkerAlt />
+        </InputGroup.Text>
+        <Form.Control
+          type="text"
+          placeholder="Inserisci una città"
+          value={searchData.city}
+          onChange={handleChange}
+          required
+        />
+      </InputGroup>
+    </Form.Group>
+  </Col>
+  <Col xs={12} md={10}>
+    <Form.Group className="mb-3" controlId="dataPrenotazione">
+      <InputGroup>
+        <Form.Control
+          type="date"
+          value={searchData.dataPrenotazione}
+          onChange={handleChange}
+          required
+        />
+      </InputGroup>
+    </Form.Group>
+  </Col>
+  <Col xs={12} md={2}>
+    <Button variant="primary" type="submit" className="w-100 mb-2">
+      Cerca
+    </Button>
+  </Col>
+</Form>
+
       </Row>
 
       <Row className="g-4">

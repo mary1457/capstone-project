@@ -39,7 +39,12 @@ const initialState = {
   searchForm: {
     trattamenti: "",
     city: ""
-  }
+  },
+  profileform: {
+    name: "",
+    surname: "",
+    email: "",
+  },
 };
 
 
@@ -56,6 +61,11 @@ const utenteReducer = (state = initialState, action) => {
 
         searchForm: {
           ...state.searchForm, 
+          [action.payload.id]: action.payload.value, 
+        },
+
+        profileform: {
+          ...state.profileform, 
           [action.payload.id]: action.payload.value, 
         },
       };

@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const ClientProfilePage = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.utente.profile);
+  const profileform = useSelector((state) => state.utente.profileform);
+
   const accessToken = useSelector((state) => state.accessToken.accessToken);
   const navigate = useNavigate();
 
@@ -22,13 +24,14 @@ const ClientProfilePage = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
+    console.log(e.target)
     dispatch(setField({ id, value })); 
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Dispatch your update profile action here if you want to save changes
-    dispatch(updateProfile(profile, accessToken));
+    dispatch(updateProfile(profileform, accessToken));
   };
 
   return (
@@ -72,7 +75,7 @@ const ClientProfilePage = () => {
                       <Form.Control
                         type="text"
                         placeholder="Name"
-                        value={profile.name }
+                        value={profileform.name }
                         onChange={handleChange}
                         required
                       />
@@ -88,7 +91,7 @@ const ClientProfilePage = () => {
                       <Form.Control
                         type="text"
                         placeholder="Surname"
-                        value={profile.surname }
+                        value={profileform.surname }
                         onChange={handleChange}
                         required
                       />
@@ -104,7 +107,7 @@ const ClientProfilePage = () => {
                       <Form.Control
                         type="email"
                         placeholder="Email"
-                        value={profile.email }
+                        value={profileform.email }
                         onChange={handleChange}
                         required
                       />

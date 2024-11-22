@@ -2,22 +2,33 @@ import { Container, Row, Col, Card, Button, Modal, InputGroup, Form } from 'reac
 import { FaHeart, FaUser, FaLock, FaPen, FaEnvelope } from 'react-icons/fa';
 import React, { useEffect } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfile, updateProfile, deleteProfile } from '../../redux/actions/UtenteAction'; 
+import { getProfile, updateProfile, deleteProfile , setField } from '../../redux/actions/utenteActions'; 
 import { useNavigate } from 'react-router-dom';
 
 const ClientProfilePage = () => {
   const dispatch = useDispatch();
-  const profileData = useSelector((state) => state.utente.profile);
-  const token = useSelector((state) => state.accessToken.token);
+  const profile = useSelector((state) => state.utente.profile);
+  const accessToken = useSelector((state) => state.accessToken.accessToken);
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getProfile(token));
-  }, [dispatch, token]);
+    dispatch(getProfile(accessToken));
+  }, [dispatch, accessToken]);
 
   const handleDelete = () => {
-    dispatch(deleteProfile(token));
+    dispatch(deleteProfile(accessToken));
     navigate('/register');
+  };
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    dispatch(setField({ id, value })); 
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Dispatch your update profile action here if you want to save changes
+    dispatch(updateProfile(profile, accessToken));
   };
 
   return (
@@ -35,7 +46,7 @@ const ClientProfilePage = () => {
               />
             </div>
             <Card.Body className="text-center">
-              <Card.Title>{profileData.name}</Card.Title>
+              <Card.Title>{profile.name}</Card.Title>
               <Card.Subtitle className="mb-2 text-muted">Card subtitle</Card.Subtitle>
               <div className="d-flex justify-content-center mt-2">
                 <Button variant="primary" className="me-2">
@@ -49,19 +60,20 @@ const ClientProfilePage = () => {
           </Card>
         </Col>
 
-        {/* Modale Statico */}
+        {/* Modal Statico */}
         <Col xs={12} md={8} lg={6} xl={4}>
           <div className="static-modal">
             <Modal.Dialog>
-            
               <Modal.Body>
-                <Form id="register-form">
+                <Form id="register-form" onSubmit={handleSubmit}>
                   {/* Campo Nome */}
                   <Form.Group className="mb-3" controlId="name">
                     <InputGroup>
                       <Form.Control
                         type="text"
                         placeholder="Name"
+                        value={profile.name }
+                        onChange={handleChange}
                         required
                       />
                       <InputGroup.Text>
@@ -76,6 +88,8 @@ const ClientProfilePage = () => {
                       <Form.Control
                         type="text"
                         placeholder="Surname"
+                        value={profile.surname }
+                        onChange={handleChange}
                         required
                       />
                       <InputGroup.Text>
@@ -90,6 +104,8 @@ const ClientProfilePage = () => {
                       <Form.Control
                         type="email"
                         placeholder="Email"
+                        value={profile.email }
+                        onChange={handleChange}
                         required
                       />
                       <InputGroup.Text>
@@ -98,23 +114,9 @@ const ClientProfilePage = () => {
                     </InputGroup>
                   </Form.Group>
 
-                  {/* Campo Password */}
-                  <Form.Group className="mb-3" controlId="password">
-                    <InputGroup>
-                      <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        required
-                      />
-                      <InputGroup.Text>
-                        <FaLock />
-                      </InputGroup.Text>
-                    </InputGroup>
-                  </Form.Group>
-
                   {/* Bottone per inviare il form */}
                   <Button variant="primary" type="submit" className="w-100 mb-2">
-                    Register
+                    Update
                   </Button>
                 </Form>
               </Modal.Body>

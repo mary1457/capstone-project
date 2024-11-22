@@ -1,19 +1,15 @@
+import { ACCESS_TOKEN} from "../actions/accessTokenActions";
 
-import { 
-    SET_TOKEN, 
-    
-   
-  } from "../actions/AccessTokenAction";
 const initialState = {
-   token: {}
+   accessToken: {}
   };
 
   const accessTokenReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_TOKEN:
+        case ACCESS_TOKEN:
             return {
-              ...state, // Mantiene il resto dello stato immutato
-              token: action.payload, // Salva il risultato della registrazione
+              ...state, 
+              accessToken: action.payload, 
             };
   
       default:
@@ -21,6 +17,6 @@ const initialState = {
     }
   };
   
-  // Esportazione del reducer come default
   export default accessTokenReducer;
   
+

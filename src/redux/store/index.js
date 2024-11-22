@@ -1,16 +1,17 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 
-import UtenteReducer from '../reducers/UtenteReducer'
-import centroEsteticoReducer from '../reducers/CentroEsteticoReducer'
-import accessTokenReducer from '../reducers/AccessTokenReducer'
-import cardReducer from '../reducers/CardReducer'
+import utenteReducer from '../reducers/utenteReducer'
+import centroEsteticoReducer from '../reducers/centroEsteticoReducer'
+import accessTokenReducer from '../reducers/accessTokenReducer'
+import cardReducer from '../reducers/cardReducer'
+
 
 
 const bigReducer = combineReducers({
-  utente: UtenteReducer,
- centroEstetico: centroEsteticoReducer,
- accessToken: accessTokenReducer,
-  card:cardReducer
+  accessToken: accessTokenReducer,
+  utente: utenteReducer,
+  centroEstetico: centroEsteticoReducer,
+ card: cardReducer,
 })
 
 const store = configureStore({

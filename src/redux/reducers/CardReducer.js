@@ -1,33 +1,36 @@
-// reducer.js
+import { 
+  ADD_TO_FAVORITES, 
+  REMOVE_FROM_FAVORITES, 
+  GET_PREFERITI, 
 
-import { ADD_TO_FAVORITE, REMOVE_FROM_FAVORITE , GET_PREFERITI} from "../actions/CardAction";
-
+} from "../actions/cardActions";
 
 const initialState = {
-  favorites: [], // Stato iniziale: array vuoto per i preferiti
+  favorites: [], // Stato iniziale per i preferiti
+ 
 };
 
 const cardReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TO_FAVORITE:
-      // Aggiungi il centro ai preferiti se non è già presente
-      return {
-        ...state,
-        favorites: [...state.favorites, action.payload], // Aggiungi l'elemento (o solo l'ID) ai preferiti
-      };
-
-    case REMOVE_FROM_FAVORITE:
-      // Rimuovi il centro dai preferiti
-      return {
-        ...state,
-        favorites: state.favorites.filter((center) => center.id !== action.payload.id), // Rimuovi il centro con l'ID specificato
-      };
-
-      case GET_PREFERITI:
+   
+    case GET_PREFERITI:
       return {
         ...state,
         favorites: action.payload,
       };
+
+    case ADD_TO_FAVORITES:
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload], // Aggiunge il nuovo elemento
+      };
+
+    case REMOVE_FROM_FAVORITES:
+      return {
+        ...state,
+        favorites: state.favorites.filter((item) => item.id !== action.payload), // Rimuove per ID
+      };
+
 
     default:
       return state;

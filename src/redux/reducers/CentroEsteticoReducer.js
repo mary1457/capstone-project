@@ -1,60 +1,59 @@
 // Importazione dei tipi di azioni definiti nelle action
 import { 
-    SET_FIELD, 
-    SET_REG_BEAUTY_CENTER, 
-    SET_ERROR, 
-    RESET_MESSAGES, 
-    RESET_ALL, 
+  SET_FIELD,
+  SET_ERROR,
+  RESET_ALL,
+  RESET_ERROR,
+ REG_BEAUTY_CENTER
    
-  } from "../actions/CentroEsteticoAction";
+  } from "../actions/centroEsteticoActions";
   
-  // Stato iniziale del reducer
+
   const initialState = {
-    error: {}, // Oggetto per contenere eventuali errori
-    result: {}, // Oggetto per memorizzare i risultati delle azioni
-   
     form: {
-      name: "", // Campo nome nel form
-      surname: "", // Campo cognome nel form
-      email: "", // Campo email nel form
+      name: "", 
+      surname: "", 
+      email: "", 
       password: "",
       nameBeautyCenter:"",
       address: "",
       city: "" ,
       trattamenti:""
     },
+    error: {}, 
+    result: {}, 
+    
   };
   
-  // Funzione reducer che gestisce le azioni relative all'utente
+  
   const centroEsteticoReducer = (state = initialState, action) => {
     switch (action.type) {
-      // Azione per aggiornare un campo del form
+      
       case SET_FIELD:
         return {
-          ...state, // Mantiene il resto dello stato immutato
+          ...state, 
           form: {
-            ...state.form, // Copia lo stato corrente del form
-            [action.payload.id]: action.payload.value, // Aggiorna il campo specifico
+            ...state.form, 
+            [action.payload.id]: action.payload.value, 
           },
         };
   
-      // Azione per impostare i dati dopo una registrazione
-      case SET_REG_BEAUTY_CENTER:
+      
+      case REG_BEAUTY_CENTER:
         return {
-          ...state, // Mantiene il resto dello stato immutato
-          result: action.payload, // Salva il risultato della registrazione
+          ...state, 
+          result: action.payload, 
         };
   
       
   
-      // Azione per gestire e salvare gli errori
+      
       case SET_ERROR:
         return {
-          ...state, // Mantiene il resto dello stato immutato
-          error: action.payload, // Salva l'errore ricevuto
+          ...state, 
+          error: action.payload, 
         };
   
-      // Azione per resettare completamente lo stato del reducer
       case RESET_ALL:
         return {
           ...state, // Mantiene il resto dello stato immutato
@@ -74,7 +73,7 @@ import {
         };
   
       // Azione per resettare solo i messaggi di errore o successo
-      case RESET_MESSAGES:
+      case RESET_ERROR:
         return {
           ...state, // Mantiene il resto dello stato immutato
           result: {}, // Resetta i risultati

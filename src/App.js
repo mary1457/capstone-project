@@ -15,7 +15,7 @@ import ClientHomePage from './components/ClientPages/ClientHomePage';
 import ClientFavPage from './components/ClientPages/ClientFavPage';
 import ClientResPage from './components/ClientPages/ClientResPage';
 import ClientProfilePage from './components/ClientPages/ClientProfilePage';
-import BeautyCenterForm from './components/BeautyCenterForm/BeautyCenterForm';
+import RegisterBeautyCenterForm from './components/RegisterBeautyCenterForm/RegisterBeautyCenterForm';
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
 
            {/* Route per la pagina di registrazione */}
-           <Route path="/registerBeautyCenter" element={<BeautyCenterForm />} />
+           <Route path="/registerBeautyCenter" element={<RegisterBeautyCenterForm />} />
 
           {/* Route per la home del client */}
           <Route path="/" element={<ClientHome />}  >

@@ -1,58 +1,58 @@
-import { Container, Row, Col, Form, Card, Button, InputGroup } from "react-bootstrap";
-import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useSelector, useDispatch } from "react-redux";
-import { setField, resetMessages, resetAll, getSearch, setProperty} from "../../redux/actions/UtenteAction";
-import { addToFavorite, removeFromFavorite , postPreferiti , deletePreferiti} from "../../redux/actions/CardAction";
-import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
-import { FaHeart } from 'react-icons/fa';
+import { useSelector, useDispatch } from "react-redux";
+import { Container, Row, Col, Form, Card, Button, InputGroup } from "react-bootstrap";
+import { FaSearch, FaMapMarkerAlt, FaHeart } from "react-icons/fa";
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  setField,
+  resetAll,
+  getSearch,
+} from "../../redux/actions/utenteActions";
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../redux/actions/cardActions"; 
 
-function ClientHomePage() {
+const ClientHomePage = () => {
   const dispatch = useDispatch();
 
-  // Selezioniamo i dati dallo stato Redux
   const searchData = useSelector((state) => state.utente.searchForm);
-  const result = useSelector((state) => state.utente.resultSearch); 
-  const error = useSelector((state) => state.utente.error);
-  const token = useSelector((state) => state.accessToken.token);
-  const favorites = useSelector((state) => state.card.favorites); // Preferiti dai Redux state
+  const result = useSelector((state) => state.utente.resultSearch);
+  const accessToken = useSelector((state) => state.accessToken.accessToken);
+  const favorites = useSelector((state) => state.card.favorites); 
 
-  // Resetta tutto al momento dello smontaggio del componente
   useEffect(() => {
     return () => {
       dispatch(resetAll());
     };
   }, [dispatch]);
 
-  // Gestisce i cambiamenti nei campi del modulo
   const handleChange = (e) => {
     const { id, value } = e.target;
     dispatch(setField({ id, value }));
   };
 
-  // Gestisce l'invio del modulo
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(getSearch(searchData, token));
+    await dispatch(getSearch(searchData, accessToken));
   };
 
-  const handleFavoriteClick = async (item, i) => {
-
-    const result = await dispatch(favorites.some(fav => fav.id === item.favId) ? deletePreferiti(token, item) : postPreferiti(token, item));
-    console.log(result);
-    const resultfav ={
-      index: i, // La posizione nell'array
-      newProperty: 'favId',
-      value: result.id
+  const handleToggleFavorite = (item) => {
+    const isFavorite = favorites.find((fav) => fav.centroEstetico.id === item.id); 
+    console.log("isFavorite", isFavorite); 
+  
+    if (isFavorite) {
+      console.log("Rimosso dai preferiti", item.id); 
+      dispatch(removeFromFavorites(accessToken, isFavorite.id));
+    } else {
+      console.log("Aggiunto ai preferiti", item); 
+      dispatch(addToFavorites(accessToken, item));
     }
-    dispatch(setProperty( resultfav ));
   };
   
 
   return (
     <Container fluid className="p-4">
-      {/* Barra di ricerca */}
       <Row className="mb-4">
         <Form id="search-form" onSubmit={handleSubmit}>
           <Col xs={12} md={10}>
@@ -97,27 +97,25 @@ function ClientHomePage() {
         </Form>
       </Row>
 
-      {/* Risultati */}
       <Row className="g-4">
         {result.length > 0 ? (
-          result.map((item, i) => (
+          result.map((item) => (
             <Col xs={12} md={6} xl={4} key={item.id}>
-              <Card className="mb-3" style={{ maxWidth: '100%' }}>
-                {/* Heart icon in the top right corner */}
-                <div className="d-flex justify-content-end position-absolute p-2" style={{ top: '0', right: '0' }}>
+              <Card className="mb-3" style={{ maxWidth: "100%" }}>
+                <div
+                  className="d-flex justify-content-end position-absolute p-2"
+                  style={{ top: "0", right: "0" }}
+                >
                   <FaHeart
                     size={24}
-                    className={favorites.some(fav => fav.id === item.favId) ? "text-danger" : "text-muted"}
-                    onClick={() => handleFavoriteClick(item, i)}
+                    color={favorites.find((fav) => fav.centroEstetico.id === item.id) ? "red" : "grey"} 
+                    onClick={() => handleToggleFavorite(item)} 
                   />
                 </div>
                 <div className="row g-0">
-                  {/* Image Section */}
                   <div className="col-12 col-lg-4 d-block d-lg-none">
                     <Card.Img variant="top" src="https://via.placeholder.com/150" />
                   </div>
-     
-                  {/* Card Content Section */}
                   <div className="col-12">
                     <Card.Body>
                       <Card.Title>{item.nameBeautyCenter}</Card.Title>
@@ -150,6 +148,6 @@ function ClientHomePage() {
       </Row>
     </Container>
   );
-}
+};
 
 export default ClientHomePage;

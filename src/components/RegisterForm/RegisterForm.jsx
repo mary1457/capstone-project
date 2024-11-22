@@ -1,53 +1,46 @@
-import { FaUser, FaLock, FaPen, FaEnvelope } from 'react-icons/fa'; // Icone per il form
-import { Form, Button, Row, Col, InputGroup, Alert } from 'react-bootstrap'; // Componenti di Bootstrap per il form
-import { useSelector, useDispatch } from 'react-redux'; // Hook per Redux
-import { setField, postRegister, resetMessages, resetAll } from "../../redux/actions/UtenteAction"; // Azioni Redux
-import { useNavigate } from 'react-router-dom'; // Hook per la navigazione in React Router
-import React, { useEffect } from "react"; // Import di React e hook useEffect
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { FaUser, FaLock, FaPen, FaEnvelope } from 'react-icons/fa'; 
+import { Form, Button, Row, Col, InputGroup, Alert } from 'react-bootstrap'; 
+import { setField, postRegister, resetMessages, resetAll, resetError } from "../../redux/actions/utenteActions"; 
 
 const RegisterForm = () => {
-  const dispatch = useDispatch(); // Hook per dispatch delle azioni Redux
-  const registerData = useSelector((state) => state.utente.form); // Dati del form dal Redux store
-  const result = useSelector((state) => state.utente.result); // Risultato della registrazione
-  const error = useSelector((state) => state.utente.error); // Errori restituiti dal server
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate(); 
 
-  // useEffect per eseguire il reset dei dati quando il componente viene smontato
+  const register = useSelector((state) => state.utente.form);
+  const result = useSelector((state) => state.utente.result);
+  const error = useSelector((state) => state.utente.error);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    dispatch(setField({ id, value })); 
+  };
+
   useEffect(() => {
     return () => {
-      dispatch(resetAll()); // Reset dei dati utente quando il componente è smontato
+      dispatch(resetAll()); 
     };
   }, [dispatch]);
 
-  // Funzione per aggiornare i campi del form
-  const handleChange = (e) => {
-    const { id, value } = e.target; // Ottieni id e valore del campo
-    dispatch(setField({ id, value })); // Dispatch dell'azione per aggiornare il Redux store
-  };
-
-  // Funzione per gestire l'invio del form
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Impedisci il comportamento predefinito del form
-    await dispatch(postRegister(registerData)); // Esegui l'azione di registrazione
-    console.log(result); // Stampa il risultato (utile per il debug)
+    e.preventDefault(); 
+    await dispatch(postRegister(register)); 
   };
 
-  const navigate = useNavigate(); // Hook per navigazione
-
-  // Funzione per chiudere l'alert di successo e navigare al login
   const handleClose = () => {
-    navigate('/login'); // Naviga alla pagina di login
+    navigate('/login'); 
   };
 
-  // Funzione per chiudere l'alert di errore
   const handleCloseError = () => {
-    dispatch(resetMessages()); // Resetta i messaggi di errore
+    dispatch(resetError()); 
   };
 
   return (
     <Row className="h-100 d-flex justify-content-center align-items-center">
-      <Col xs={12} sm={10} md={8} lg={6} xl={4}> {/* Colonna responsiva per il form */}
+      <Col xs={12} sm={10} md={8} lg={6} xl={4}>
 
-        {/* Mostra l'alert di successo se presente */}
         {result.message && (
           <Alert variant="success" dismissible>
             <strong>{result.message}</strong> 
@@ -55,87 +48,77 @@ const RegisterForm = () => {
           </Alert>
         )}
 
-        {/* Mostra l'alert di errore se presente */}
         {error.message && (
           <Alert variant="danger" dismissible onClose={handleCloseError}>
             <strong>{error.message}</strong> 
           </Alert>
         )}
 
-        <div className="p-4 border rounded shadow"> {/* Wrapper del form con bordi e ombra */}
-          <h1 className="text-center text-dark mb-4">Register</h1> {/* Titolo del form */}
+        <div className="p-4 border rounded shadow">
+          <h1 className="text-center text-dark mb-4">Register</h1>
           
-          <Form id="register-form" onSubmit={handleSubmit}> {/* Inizio del form */}
+          <Form id="register-form" onSubmit={handleSubmit}>
             
-            {/* Campo Nome */}
             <Form.Group className="mb-3" controlId="name">
               <InputGroup>
                 <Form.Control
-                  type="text" // Tipo di input
-               
-                  placeholder="Name" // Placeholder per il campo
-                  value={registerData.name} // Valore del campo dallo stato Redux
-                  onChange={handleChange} // Funzione per aggiornare il Redux store
-                  required // Campo obbligatorio
+                  type="text"
+                  placeholder="Name"
+                  value={register.name}
+                  onChange={handleChange}
+                  required
                 />
                 <InputGroup.Text>
-                  <FaUser /> {/* Icona utente */}
+                  <FaUser />
                 </InputGroup.Text>
               </InputGroup>
             </Form.Group>
 
-            {/* Campo Cognome */}
             <Form.Group className="mb-3" controlId="surname">
               <InputGroup>
                 <Form.Control
                   type="text"
-                 
                   placeholder="Surname"
-                  value={registerData.surname}
+                  value={register.surname}
                   onChange={handleChange}
                   required
                 />
                 <InputGroup.Text>
-                  <FaPen /> {/* Icona per il cognome */}
+                  <FaPen />
                 </InputGroup.Text>
               </InputGroup>
             </Form.Group>
 
-            {/* Campo Email */}
             <Form.Group className="mb-3" controlId="email">
               <InputGroup>
                 <Form.Control
                   type="email"
-               
                   placeholder="Email"
-                  value={registerData.email }
+                  value={register.email}
                   onChange={handleChange}
                   required
                 />
                 <InputGroup.Text>
-                  <FaEnvelope /> {/* Icona email */}
+                  <FaEnvelope />
                 </InputGroup.Text>
               </InputGroup>
             </Form.Group>
 
-            {/* Campo Password */}
             <Form.Group className="mb-3" controlId="password">
               <InputGroup>
                 <Form.Control
                   type="password"
-                 
                   placeholder="Password"
-                  value={registerData.password}
+                  value={register.password}
                   onChange={handleChange}
                   required
                 />
                 <InputGroup.Text>
-                  <FaLock /> {/* Icona per la password */}
+                  <FaLock />
                 </InputGroup.Text>
               </InputGroup>
             </Form.Group>
 
-            {/* Bottone per inviare il form */}
             <Button variant="primary" type="submit" className="w-100 mb-2">
               Register
             </Button>

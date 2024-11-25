@@ -3,15 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaLock, FaPen, FaEnvelope } from 'react-icons/fa'; 
 import { Form, Button, Row, Col, InputGroup, Alert } from 'react-bootstrap'; 
-import { setField, postRegister, resetMessages, resetAll, resetError } from "../../redux/actions/utenteActions"; 
+import { setField, registrazioneCliente, resetAll, resetError } from "../../redux/actions/clienteActions"; 
 
 const RegisterForm = () => {
   const dispatch = useDispatch(); 
   const navigate = useNavigate(); 
 
-  const register = useSelector((state) => state.utente.form);
-  const result = useSelector((state) => state.utente.result);
-  const error = useSelector((state) => state.utente.error);
+  const cliente = useSelector((state) => state.cliente.form); 
+  const result = useSelector((state) => state.cliente.result); 
+  const error = useSelector((state) => state.cliente.error); 
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -27,7 +27,7 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
-    await dispatch(postRegister(register)); 
+    await dispatch(registrazioneCliente(cliente)); 
   };
 
   const handleClose = () => {
@@ -60,12 +60,12 @@ const RegisterForm = () => {
           
           <Form id="register-form" onSubmit={handleSubmit}>
             
-            <Form.Group className="mb-3" controlId="name">
+            <Form.Group className="mb-3" controlId="nome">
               <InputGroup>
                 <Form.Control
                   type="text"
                   placeholder="Name"
-                  value={register.name}
+                  value={cliente.nome}
                   onChange={handleChange}
                   required
                 />
@@ -75,12 +75,12 @@ const RegisterForm = () => {
               </InputGroup>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="surname">
+            <Form.Group className="mb-3" controlId="cognome">
               <InputGroup>
                 <Form.Control
                   type="text"
                   placeholder="Surname"
-                  value={register.surname}
+                  value={cliente.cognome}
                   onChange={handleChange}
                   required
                 />
@@ -95,7 +95,7 @@ const RegisterForm = () => {
                 <Form.Control
                   type="email"
                   placeholder="Email"
-                  value={register.email}
+                  value={cliente.email}
                   onChange={handleChange}
                   required
                 />
@@ -110,7 +110,7 @@ const RegisterForm = () => {
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  value={register.password}
+                  value={cliente.password}
                   onChange={handleChange}
                   required
                 />

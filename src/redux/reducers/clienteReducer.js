@@ -1,10 +1,11 @@
 import { 
-    SET_FIELD,
-    SET_ERROR,
-    RESET_ALL,
-    RESET_ERROR,
-    REG_CENTRO_ESTETICO  
-  } from "../actions/centroEsteticoActions";
+    SET_FIELD, 
+    SET_ERROR, 
+    RESET_ALL, 
+    RESET_ERROR, 
+    REG_CLIENTE 
+  } from "../actions/clienteActions";
+  
   
   const initialState = {
     form: {
@@ -12,18 +13,14 @@ import {
       cognome: "", 
       email: "", 
       password: "",
-      nomeCentroEstetico: "",
-      indirizzo: "",
-      citta: "", 
-      trattamento: ""
     },
     error: {}, 
     result: {}, 
   };
   
-  const centroEsteticoReducer = (state = initialState, action) => {
+ 
+  const clienteReducer = (state = initialState, action) => {
     switch (action.type) {
-    
       case SET_FIELD:
         return {
           ...state, 
@@ -33,21 +30,18 @@ import {
           },
         };
   
-      
-      case REG_CENTRO_ESTETICO:
+      case REG_CLIENTE:
         return {
           ...state, 
           result: action.payload, 
         };
   
-     
       case SET_ERROR:
         return {
           ...state, 
           error: action.payload, 
         };
   
-     
       case RESET_ALL:
         return {
           ...state, 
@@ -58,19 +52,14 @@ import {
             cognome: "", 
             email: "", 
             password: "", 
-            nomeCentroEstetico: "",
-            indirizzo: "",
-            citta: "", 
-            trattamento: "",
           },
         };
   
-     
       case RESET_ERROR:
         return {
           ...state, 
-          result: {}, 
           error: {}, 
+          result: {}, 
         };
   
       default:
@@ -78,5 +67,5 @@ import {
     }
   };
   
-  export default centroEsteticoReducer;
+  export default clienteReducer;
   

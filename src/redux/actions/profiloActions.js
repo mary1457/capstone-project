@@ -1,17 +1,22 @@
-export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
-export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
+const baseEndpoint = 'http://localhost:3001/user';
+export const SET_FIELD = "SET_FIELD";
 export const SET_ERROR = 'SET_ERROR';
-export const GET_PREFERITI = 'GET_PREFERITI';
+export const GET_PROFILO = 'GET_PROFILO'; 
+export const UPDATE_PROFILO = 'UPDATE_PROFILO';
+export const DELETE_PROFILO = 'DELETE_PROFILO';
+export const RESET_ALL = "RESET_ALL"; 
 
-const baseEndpointFav = 'http://localhost:3001/preferiti';
+export const setField = ({ id, value }) => ({
+  type: SET_FIELD,
+  payload: { id, value },
+});
 
-/**
- * Ottieni i preferiti dal server.
- */
-export const getPreferiti = (accessToken) => {
+
+
+export const getProfilo = (accessToken) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${baseEndpointFav}/me`, {
+      const response = await fetch(baseEndpoint + "/me", {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken.accessToken}`,
@@ -20,12 +25,12 @@ export const getPreferiti = (accessToken) => {
       });
 
       if (response.ok) {
-        const favorites = await response.json();
+        const profile = await response.json();
         dispatch({
-          type: GET_PREFERITI,
-          payload: favorites,
+          type: GET_PROFILO,
+          payload: profile,
         });
-        return favorites;
+        return profile;
       } else {
         const error = await response.json();
         dispatch({
@@ -35,41 +40,35 @@ export const getPreferiti = (accessToken) => {
         return null;
       }
     } catch (error) {
-      console.error('Fetch Error:', error);
       dispatch({
         type: SET_ERROR,
-        payload: 'Errore di rete o server non raggiungibile',
+        payload: 'Network or server error',
       });
       return null;
     }
   };
 };
 
-/**
- * Aggiungi un elemento ai preferiti.
- */
-export const addToFavorites = (accessToken, item) => {
-  const request ={nameBeautyCenter: item.nameBeautyCenter,
-address:item.address,
-centroEsteticoId: item.id}
+
+export const updateProfilo = (profileData, accessToken) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(baseEndpointFav, {
-        method: 'POST',
+      const response = await fetch(`${baseEndpoint}/me`, {
+        method: 'PUT',
         headers: {
           'Authorization': `Bearer ${accessToken.accessToken}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(request),
+        body: JSON.stringify(profileData),
       });
 
       if (response.ok) {
-        const newFavorite = await response.json();
+        const updatedProfile = await response.json();
         dispatch({
-          type: ADD_TO_FAVORITES,
-          payload: newFavorite,
+          type: UPDATE_PROFILO,
+          payload: updatedProfile,
         });
-        return newFavorite;
+        return updatedProfile;
       } else {
         const error = await response.json();
         dispatch({
@@ -79,23 +78,20 @@ centroEsteticoId: item.id}
         return null;
       }
     } catch (error) {
-      console.error('Fetch Error:', error);
       dispatch({
         type: SET_ERROR,
-        payload: 'Errore di rete o server non raggiungibile',
+        payload: 'Network or server error',
       });
       return null;
     }
   };
 };
 
-/**
- * Rimuovi un elemento dai preferiti.
- */
-export const removeFromFavorites = (accessToken, id) => {
+
+export const deleteProfilo = (accessToken) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${baseEndpointFav}/${id}`, {
+      const response = await fetch(`${baseEndpoint}/me`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${accessToken.accessToken}`,
@@ -105,8 +101,7 @@ export const removeFromFavorites = (accessToken, id) => {
 
       if (response.ok) {
         dispatch({
-          type: REMOVE_FROM_FAVORITES,
-          payload: id,
+          type: DELETE_PROFILO,
         });
         return true;
       } else {
@@ -118,10 +113,9 @@ export const removeFromFavorites = (accessToken, id) => {
         return false;
       }
     } catch (error) {
-      console.error('Fetch Error:', error);
       dispatch({
         type: SET_ERROR,
-        payload: 'Errore di rete o server non raggiungibile',
+        payload: 'Network or server error',
       });
       return false;
     }

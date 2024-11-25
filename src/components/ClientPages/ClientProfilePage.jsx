@@ -2,26 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Modal, InputGroup, Form } from 'react-bootstrap';
 import { FaHeart, FaUser, FaLock, FaPen, FaEnvelope } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfile, updateProfile, deleteProfile, setField } from '../../redux/actions/utenteActions';
+import { getProfilo, updateProfilo, deleteProfilo, setField } from '../../redux/actions/profiloActions';
 import { useNavigate } from 'react-router-dom';
 
 const ClientProfilePage = () => {
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.utente.profile);
-  const profileform = useSelector((state) => state.utente.profileform);
-
+  const profile = useSelector((state) => state.profilo.profile);
+  const profileForm = useSelector((state) => state.profilo.profileForm);
   const accessToken = useSelector((state) => state.accessToken.accessToken);
   const navigate = useNavigate();
-
   
   const [showModal, setShowModal] = useState(false);
 
+  
   useEffect(() => {
-    dispatch(getProfile(accessToken));
+    dispatch(getProfilo(accessToken));
   }, [dispatch, accessToken]);
 
+  
+  useEffect(() => {
+    if (profile) {
+      const fieldsToSync = ['nome', 'cognome', 'email'];
+      fieldsToSync.forEach((field) => {
+        if (profile[field]) {
+          dispatch(setField({ id: field, value: profile[field] }));
+        }
+      });
+    }
+  }, [profile, dispatch]);
+  
+
   const handleDelete = () => {
-    dispatch(deleteProfile(accessToken));
+    dispatch(deleteProfilo(accessToken));
     navigate('/register');
   };
 
@@ -32,27 +44,26 @@ const ClientProfilePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProfile(profileform, accessToken));
-    setShowModal(false); 
+    dispatch(updateProfilo(profileForm, accessToken));
+    setShowModal(false);  
   };
 
   return (
     <Container fluid className="p-4">
       <Row className="g-4 d-flex justify-content-center align-items-center">
-        {/* Card Profilo */}
         <Col xs={12} md={8} lg={6} xl={4}>
           <Card style={{ width: '100%' }}>
             <div className="text-center mt-3">
               <Card.Img
-                src="https://via.placeholder.com/100"
+                src={profile.avatar}
                 alt="Profile"
                 className="rounded-circle"
                 style={{ width: '100px', height: '100px', objectFit: 'cover' }}
               />
             </div>
             <Card.Body className="text-center">
-              <Card.Title>{profile.name}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Card subtitle</Card.Subtitle>
+              <Card.Title>{profile.nome} {profile.cognome}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">{profile.email}</Card.Subtitle>
               <div className="d-flex justify-content-center mt-2">
                 <Button variant="primary" className="me-2" onClick={() => setShowModal(true)}>
                   Edit
@@ -65,20 +76,19 @@ const ClientProfilePage = () => {
           </Card>
         </Col>
 
-        {/* Modale dinamico */}
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>
           <Modal.Header closeButton>
             <Modal.Title>Edit Profile</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form id="register-form" onSubmit={handleSubmit}>
-              {/* Campo Nome */}
-              <Form.Group className="mb-3" controlId="name">
+              {/* Name Field */}
+              <Form.Group className="mb-3" controlId="nome">
                 <InputGroup>
                   <Form.Control
                     type="text"
                     placeholder="Name"
-                    value={profileform.name}
+                    value={profileForm.nome}
                     onChange={handleChange}
                     required
                   />
@@ -88,13 +98,13 @@ const ClientProfilePage = () => {
                 </InputGroup>
               </Form.Group>
 
-              {/* Campo Cognome */}
-              <Form.Group className="mb-3" controlId="surname">
+              {/* Surname Field */}
+              <Form.Group className="mb-3" controlId="cognome">
                 <InputGroup>
                   <Form.Control
                     type="text"
                     placeholder="Surname"
-                    value={profileform.surname}
+                    value={profileForm.cognome}
                     onChange={handleChange}
                     required
                   />
@@ -104,13 +114,13 @@ const ClientProfilePage = () => {
                 </InputGroup>
               </Form.Group>
 
-              {/* Campo Email */}
+             
               <Form.Group className="mb-3" controlId="email">
                 <InputGroup>
                   <Form.Control
                     type="email"
                     placeholder="Email"
-                    value={profileform.email}
+                    value={profileForm.email }
                     onChange={handleChange}
                     required
                   />
@@ -120,7 +130,6 @@ const ClientProfilePage = () => {
                 </InputGroup>
               </Form.Group>
 
-              {/* Bottone per inviare il form */}
               <Button variant="primary" type="submit" className="w-100 mb-2">
                 Update
               </Button>

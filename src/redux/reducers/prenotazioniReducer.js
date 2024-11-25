@@ -1,46 +1,52 @@
 import {
-   
-    GET_PRENOTAZIONI,
+  GET_PRENOTAZIONI,
+  DELETE_PRENOTAZIONI,
+  SET_ERROR,
+  ADD_PRENOTAZIONI
+} from "../actions/prenotazioniActions";
+
+
+const initialState = {
+  prenotazioni: [],  
+  error: null      
+};
+
+const prenotazioniReducer = (state = initialState, action) => {
+  switch (action.type) {
+
     
-    DELETE_PRENOTAZIONI,
-  
-   
-  } from "../actions/prenotazioniActions";
+    case GET_PRENOTAZIONI:
+      return {
+        ...state,
+        prenotazioni: action.payload,
+        error: null,  
+      };
 
-
-  const initialState = {
-   prenotazioni:[]
-  };
-
-  const prenotazioniReducer = (state = initialState, action) => {
-    switch (action.type) {
-  
-      
-  
-  
-      case GET_PRENOTAZIONI:
-        return {
-          ...state,
-          prenotazioni: action.payload,
-        };
-  
-  
+      case ADD_PRENOTAZIONI:
      
-  
-  
-      case DELETE_PRENOTAZIONI:
-        return {
-            ...state,
-            prenotazioni: state.prenotazioni.filter((item) => item.id !== action.payload),  
-        };
-  
-  
-      
-  
-      
-      default:
-        return state;
-    }
-  };
+      return {
+        ...state,
+        prenotazioni: [...state.prenotazioni, action.payload], 
+      };
 
-  export default prenotazioniReducer;
+   
+    case DELETE_PRENOTAZIONI:
+      return {
+        ...state,
+        prenotazioni: state.prenotazioni.filter((item) => item.id !== action.payload),  
+        error: null, 
+      };
+
+    
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,  
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default prenotazioniReducer;

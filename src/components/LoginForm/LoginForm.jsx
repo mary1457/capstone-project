@@ -3,52 +3,51 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaUser, FaLock } from "react-icons/fa";
 import { Form, Button, Row, Col, InputGroup, Alert } from "react-bootstrap";
-import { setField, postLogin, resetAll, resetError } from "../../redux/actions/utenteActions";
+import { setFieldLogin, login, resetAll, resetError } from "../../redux/actions/utenteActions";
 import { accessToken } from "../../redux/actions/accessTokenActions";
 
-
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  
+  const loginForm = useSelector((state) => state.utente.form); 
+  const error = useSelector((state) => state.utente.error); 
 
-
-const login = useSelector((state) => state.utente.form);
-const error = useSelector((state) => state.utente.error);
-
-
-const handleChange = (e) => {
-  const { id, value } = e.target;
-  dispatch(setField({ id, value }));
-};
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const utenteLogin = await dispatch(postLogin(login)); 
-  if (utenteLogin) {
-    dispatch(accessToken(utenteLogin)); 
-    navigate('/'); 
-  }
-};
-
-
-const handleCloseError = () => {
-  dispatch(resetError()); 
-};
-
-
-useEffect(() => {
-  return () => {
-    dispatch(resetAll()); 
+  
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    dispatch(setFieldLogin({ id, value }));
   };
-}, [dispatch]);
 
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const utenteLogin = await dispatch(login(loginForm)); 
+    if (utenteLogin) {
+      dispatch(accessToken(utenteLogin)); 
+      navigate('/'); 
+    }
+  };
+
+  
+  const handleCloseError = () => {
+    dispatch(resetError());
+  };
+
+  
+  useEffect(() => {
+    return () => {
+      dispatch(resetAll()); 
+    };
+  }, [dispatch]);
 
   return (
     <Row className="h-100 d-flex justify-content-center align-items-center">
       <Col xs={12} sm={10} md={8} lg={6} xl={4}>
-        {error.message && (
+       
+        {error && error.message && (
           <Alert variant="danger" dismissible onClose={handleCloseError}>
             <strong>{error.message}</strong>
           </Alert>
@@ -62,7 +61,7 @@ useEffect(() => {
                 <Form.Control
                   type="email"
                   placeholder="Email"
-                  value={login.email}
+                  value={loginForm.email}
                   onChange={handleChange}
                   required
                 />
@@ -77,7 +76,7 @@ useEffect(() => {
                 <Form.Control
                   type="password"
                   placeholder="Password"
-                  value={login.password}
+                  value={loginForm.password}
                   onChange={handleChange}
                   required
                 />

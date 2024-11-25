@@ -1,14 +1,19 @@
-const baseEndpoint = 'http://localhost:3001/res';
+const baseEndpoint = 'http://localhost:3001/fav';
 
-export const GET_PRENOTAZIONI = "GET_PRENOTAZIONI"; 
-export const DELETE_PRENOTAZIONI = "DELETE_PRENOTAZIONI";
+export const ADD_PREFERITI = 'ADD_PREFERITI';
+export const REMOVE_PREFERITI = 'REMOVE_PREFERITI';
 export const SET_ERROR = 'SET_ERROR';
-export const ADD_PRENOTAZIONI = 'ADD_PRENOTAZIONI';
+export const GET_PREFERITI = 'GET_PREFERITI';
+export const RESET_ALL = "RESET_ALL"; 
 
-export const getPrenotazioni = (accessToken) => {
+export const resetAll = () => ({
+  type: RESET_ALL,
+});
+
+export const getPreferiti = (accessToken) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(baseEndpoint + "/me", {
+      const response = await fetch(`${baseEndpoint}/me`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken.accessToken}`,
@@ -17,12 +22,12 @@ export const getPrenotazioni = (accessToken) => {
       });
 
       if (response.ok) {
-        const prenotazioni = await response.json();
+        const preferiti = await response.json();
         dispatch({
-          type: GET_PRENOTAZIONI,
-          payload: prenotazioni,
+          type: GET_PREFERITI,
+          payload: preferiti, 
         });
-        return prenotazioni; 
+        return preferiti;
       } else {
         const errore = await response.json();
         dispatch({
@@ -42,9 +47,10 @@ export const getPrenotazioni = (accessToken) => {
   };
 };
 
-export const postPrenotazioni = (accessToken, item, data) => {
+
+export const postPreferiti = (accessToken, item) => {
   const request = {
-    centroEsteticoId: item, data: data
+    centroEsteticoId: item.id, 
   };
   
   return async (dispatch) => {
@@ -59,12 +65,12 @@ export const postPrenotazioni = (accessToken, item, data) => {
       });
 
       if (response.ok) {
-        const prenotazione = await response.json();
+        const preferiti = await response.json();
         dispatch({
-          type: ADD_PRENOTAZIONI,
-          payload: prenotazione, 
+          type: ADD_PREFERITI,
+          payload: preferiti, 
         });
-        return prenotazione;
+        return preferiti;
       } else {
         const errore = await response.json();
         dispatch({
@@ -85,7 +91,7 @@ export const postPrenotazioni = (accessToken, item, data) => {
 };
 
 
-export const deletePrenotazioni = (accessToken, id) => {
+export const deletePreferiti = (accessToken, id) => {
   return async (dispatch) => {
     try {
       const response = await fetch(`${baseEndpoint}/${id}`, {
@@ -98,8 +104,8 @@ export const deletePrenotazioni = (accessToken, id) => {
 
       if (response.ok) {
         dispatch({
-          type: DELETE_PRENOTAZIONI,
-          payload: id,
+          type: REMOVE_PREFERITI,
+          payload: id, 
         });
         return true;
       } else {

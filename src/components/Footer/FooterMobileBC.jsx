@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import {  FaHeart, FaCalendarAlt, FaUser, FaStar } from 'react-icons/fa';
+import {  FaHeart, FaCalendarAlt, FaUser, FaStar, FaAddressBook } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const FooterMobile = () => {
+const FooterMobileBC = () => {
   return (
     <Container fluid className="bg-dark text-white p-3 d-block d-lg-none">
       <Row className="d-flex justify-content-between text-center">
@@ -14,19 +14,19 @@ const FooterMobile = () => {
           </Link>
         </Col>
         <Col xs={3} md={2} className="text-center">
-          <Link to={'/fav'} className="text-white">
-            <FaHeart size={30} />
-            <div>Favorites</div>
+          <Link to={'/clients'} className="text-white">
+            <FaAddressBook size={30} />
+            <div>Clients</div>
           </Link>
         </Col>
         <Col xs={3} md={2} className="text-center">
-          <Link to={'/res'} className="text-white">
+          <Link to={'/resBeautyCenter'} className="text-white">
             <FaCalendarAlt size={30} />
             <div>Reservations</div>
           </Link>
         </Col>
         <Col xs={3} md={2} className="text-center">
-          <Link to={'/profile'} className="text-white">
+          <Link to={'/profileBeautyCenter'} className="text-white">
             <FaUser size={30} />
             <div>Profile</div>
           </Link>
@@ -36,4 +36,4 @@ const FooterMobile = () => {
   );
 };
 
-export default FooterMobile;
+export default FooterMobileBC;

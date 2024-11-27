@@ -1,6 +1,7 @@
 const baseEndpoint = 'http://localhost:3001/res';
 
 export const GET_PRENOTAZIONI = "GET_PRENOTAZIONI"; 
+export const GET_TODAY = "GET_TODAY"; 
 export const DELETE_PRENOTAZIONI = "DELETE_PRENOTAZIONI";
 export const SET_ERROR = 'SET_ERROR';
 export const ADD_PRENOTAZIONI = 'ADD_PRENOTAZIONI';
@@ -11,7 +12,7 @@ export const getPrenotazioni = (accessToken) => {
       const response = await fetch(baseEndpoint + "/me", {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -52,7 +53,7 @@ export const postPrenotazioni = (accessToken, item, data) => {
       const response = await fetch(baseEndpoint, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(request),
@@ -91,7 +92,7 @@ export const deletePrenotazioni = (accessToken, id) => {
       const response = await fetch(`${baseEndpoint}/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -117,6 +118,45 @@ export const deletePrenotazioni = (accessToken, id) => {
         payload: 'Problema lato server',
       });
       return false;
+    }
+  };
+};
+
+
+export const getToday = (accessToken) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(baseEndpoint + "/today", {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const today = await response.json();
+        dispatch({
+          type: GET_TODAY,
+          payload: today,
+        });
+        return today;
+      } else {
+        const error = await response.json();
+        dispatch({
+          type: SET_ERROR,
+          payload: error.message,
+        });
+       
+        return null;
+      }
+    } catch (error) {
+      dispatch({
+        type: SET_ERROR,
+        payload: 'Network or server error',
+      });
+      
+      return null;
     }
   };
 };

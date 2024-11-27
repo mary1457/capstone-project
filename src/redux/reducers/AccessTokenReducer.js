@@ -1,7 +1,8 @@
 import { ACCESS_TOKEN} from "../actions/accessTokenActions";
 
 const initialState = {
-   accessToken: {}
+   accessToken: {},
+   userType: null,
   };
 
   const accessTokenReducer = (state = initialState, action) => {
@@ -9,7 +10,8 @@ const initialState = {
         case ACCESS_TOKEN:
             return {
               ...state, 
-              accessToken: action.payload, 
+              accessToken: action.payload.accessToken, 
+              userType: action.payload.userType,
             };
   
       default:

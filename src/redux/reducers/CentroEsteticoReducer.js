@@ -3,7 +3,8 @@ import {
     SET_ERROR,
     RESET_ALL,
     RESET_ERROR,
-    REG_CENTRO_ESTETICO  
+    REG_CENTRO_ESTETICO,  
+    GET_CLIENTI
   } from "../actions/centroEsteticoActions";
   
   const initialState = {
@@ -19,6 +20,7 @@ import {
     },
     error: {}, 
     result: {}, 
+    clients:[]
   };
   
   const centroEsteticoReducer = (state = initialState, action) => {
@@ -72,10 +74,19 @@ import {
           result: {}, 
           error: {}, 
         };
+
+        case GET_CLIENTI:
+          return {
+            ...state,
+            clients: action.payload,
+           
+          };
   
       default:
         return state;
     }
+
+   
   };
   
   export default centroEsteticoReducer;

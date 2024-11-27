@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import {  FaHeart, FaCalendarAlt, FaUser, FaStar } from "react-icons/fa";
+import {   FaUser, FaCalendarDay, FaAddressBook, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";  
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,19 +17,19 @@ const ClientSidebar = () => {
             </Link>
 
           
-            <Link to={'/fav'} className="text-white d-flex align-items-center mb-3">
-              <FaHeart size={30} className="me-2" />
-              <div>Favorites</div>
+            <Link to={'/clients'} className="text-white d-flex align-items-center mb-3">
+              <FaAddressBook size={30} className="me-2" />
+              <div>Clients</div>
             </Link>
 
           
-            <Link to={'/res'} className="text-white d-flex align-items-center mb-3">
-              <FaCalendarAlt size={30} className="me-2" />
+            <Link to={'/resBeautyCenter'} className="text-white d-flex align-items-center mb-3">
+              <FaCalendarDay size={30} className="me-2" />
               <div>Reservations</div>
             </Link>
 
            
-            <Link to={'/profile'} className="text-white d-flex align-items-center">
+            <Link to={'/profileBeautyCenter'} className="text-white d-flex align-items-center">
               <FaUser size={30} className="me-2" />
               <div>Profile</div>
             </Link>

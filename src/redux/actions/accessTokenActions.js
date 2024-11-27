@@ -1,6 +1,6 @@
 export const ACCESS_TOKEN = "ACCESS_TOKEN"; 
 
-export const accessToken = (accessToken) => ({
+export const accessToken = (accessToken, userType) => ({
     type: ACCESS_TOKEN,
-    payload: accessToken,
+    payload: accessToken, userType
   });

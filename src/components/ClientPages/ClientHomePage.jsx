@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Form, Card, Button, InputGroup, ListGroup } from "react-bootstrap";
 import { FaSearch, FaMapMarkerAlt, FaHeart } from "react-icons/fa";
@@ -13,16 +13,14 @@ import {
   postPreferiti,
   deletePreferiti,
 } from "../../redux/actions/preferitiActions";
-
 import {
-
   postPrenotazioni,
-
 } from "../../redux/actions/prenotazioniActions";
 
 const ClientHomePage = () => {
   const dispatch = useDispatch();
 
+  const [searchPerformed, setSearchPerformed] = useState(false); // Stato per verificare se la ricerca è stata fatta
   const searchData = useSelector((state) => state.home.searchForm);
   const result = useSelector((state) => state.home.searchResult);
   const accessToken = useSelector((state) => state.accessToken.accessToken);
@@ -34,7 +32,25 @@ const ClientHomePage = () => {
     for (let hour = 9; hour <= 18; hour++) {
       hours.push(`${hour < 10 ? '0' : ''}${hour}:00`);
     }
-    return hours;
+
+    // Verifica se la data selezionata è oggi
+    const today = new Date();
+    const selectedDate = new Date(searchData.dataPrenotazione);
+
+    if (
+      selectedDate.getDate() === today.getDate() &&
+      selectedDate.getMonth() === today.getMonth() &&
+      selectedDate.getFullYear() === today.getFullYear()
+    ) {
+      // Se la data è oggi, rimuoviamo gli orari precedenti all'ora attuale
+      const currentHour = today.getHours();
+      return hours.filter((hour) => {
+        const hourValue = parseInt(hour.slice(0, 2), 10); // Estraiamo l'ora
+        return hourValue > currentHour;
+      });
+    }
+
+    return hours; // Se non è oggi, restituiamo tutti gli orari
   };
 
   useEffect(() => {
@@ -56,7 +72,7 @@ const ClientHomePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setSearchPerformed(true); // Imposta lo stato per indicare che la ricerca è stata effettuata
     await dispatch(ricerca(searchData, accessToken));
   };
 
@@ -70,24 +86,19 @@ const ClientHomePage = () => {
     }
   };
 
-
   const handleSaveRes = async (item, orario) => {
-    console.log(item)
-    console.log(orario)
-
-    const data= searchData.dataPrenotazione+"T"+orario+":00"
- console.log(data)
-   const result= await dispatch(postPrenotazioni(accessToken, item, data));
-   if (result) {dispatch(ricerca(searchData, accessToken))}
-
-
+    const data = searchData.dataPrenotazione + "T" + orario + ":00";
+    const result = await dispatch(postPrenotazioni(accessToken, item, data));
+    if (result) {
+      dispatch(ricerca(searchData, accessToken));
+    }
   };
 
   return (
     <Container fluid className="p-4">
-      <Row className="mb-4">
-        <Form id="search-form" onSubmit={handleSubmit}>
-          <Col xs={12} md={10}>
+      <Form id="search-form" onSubmit={handleSubmit}>
+        <Row className="mb-4">
+          <Col xs={12}>
             <Form.Group controlId="trattamento" className="mb-3">
               <InputGroup>
                 <InputGroup.Text>
@@ -109,7 +120,7 @@ const ClientHomePage = () => {
               </InputGroup>
             </Form.Group>
           </Col>
-          <Col xs={12} md={10}>
+          <Col xs={12} md={6}>
             <Form.Group className="mb-3" controlId="citta">
               <InputGroup>
                 <InputGroup.Text>
@@ -125,7 +136,7 @@ const ClientHomePage = () => {
               </InputGroup>
             </Form.Group>
           </Col>
-          <Col xs={12} md={10}>
+          <Col xs={12} md={6}>
             <Form.Group className="mb-3" controlId="dataPrenotazione">
               <InputGroup>
                 <Form.Control
@@ -137,75 +148,68 @@ const ClientHomePage = () => {
               </InputGroup>
             </Form.Group>
           </Col>
-          <Col xs={12} md={2}>
+          <Col xs={12} md={6}>
             <Button variant="primary" type="submit" className="w-100 mb-2">
               Search
             </Button>
           </Col>
-        </Form>
-      </Row>
+        </Row>
+      </Form>
 
       <Row className="g-4">
-        {result.length > 0 ? (
-          result.map((item) => {
-            // Creiamo un set di orari prenotati (escludendo quelli con stato "PRENOTATO")
-            const prenotati = new Set(
-              item.disponibilita
-                .filter((orario) => orario.stato === "PRENOTATO")
-                .map((orario) => {
-                  // Estrarre solo l'ora in formato "HH:00"
-                  return orario.data.slice(11, 16);
-                })
-            );
+        {searchPerformed ? ( // Se la ricerca è stata effettuata
+          result.length > 0 ? ( // Se ci sono risultati
+            result.map((item) => {
+              const prenotati = new Set(
+                item.disponibilita
+                  .filter((orario) => orario.stato === "PRENOTATO")
+                  .map((orario) => orario.data.slice(11, 16))
+              );
+              const availableHours = getAvailableHours().filter((hour) => !prenotati.has(hour));
 
-            // Orari disponibili tra le 9:00 e le 18:00
-            const availableHours = getAvailableHours().filter((hour) => !prenotati.has(hour));
+              return (
+                <Col xs={12} md={6} xl={4} key={item.id}>
+                  <Card className="mb-3" style={{ maxWidth: "100%" }}>
+                    <div
+                      className="d-flex justify-content-end position-absolute p-2"
+                      style={{ top: "0", right: "0" }}
+                    >
+                      <FaHeart
+                        size={24}
+                        color={preferiti.find((fav) => fav.centroEstetico.id === item.id) ? "red" : "grey"}
+                        onClick={() => handleToggleFavorite(item)}
+                      />
+                    </div>
 
-            return (
-              <Col xs={12} md={6} xl={4} key={item.id}>
-                <Card className="mb-3" style={{ maxWidth: "100%" }}>
-                  <div
-                    className="d-flex justify-content-end position-absolute p-2"
-                    style={{ top: "0", right: "0" }}
-                  >
-                    <FaHeart
-                      size={24}
-                      color={preferiti.find((fav) => fav.centroEstetico.id === item.id) ? "red" : "grey"}
-                      onClick={() => handleToggleFavorite(item)}
-                    />
-                  </div>
-
-                  <div className="row g-0">
-                    <div className="col-12">
-                      <Card.Body>
-                        <Card.Title>{item.nomeCentroEstetico}</Card.Title>
-                        <Card.Text>{item.indirizzo}</Card.Text>
-                        <Card.Text>
-                          <small className="text-muted">{item.email}</small>
-                        </Card.Text>
-                        <ListGroup variant="flush" className="d-flex justify-content-between">
-                          {/* Creiamo la lista di orari disponibili */}
-                          {availableHours.map((hour, index) => (
-                            <ListGroup.Item key={index}>{hour}  
+                    <Card.Body>
+                      <Card.Title>{item.nomeCentroEstetico}</Card.Title>
+                      <Card.Text>{item.indirizzo}</Card.Text>
+                      <ListGroup variant="flush" className="d-flex justify-content-between">
+                        {availableHours.map((hour, index) => (
+                          <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
+                            <span>{hour}</span>
                             <Button
                               variant="primary"
                               size="sm"
-                              onClick={() => handleSaveRes(item.id,availableHours[index])}
+                              onClick={() => handleSaveRes(item.id, hour)}
                             >
-                              Prenota
-                            </Button></ListGroup.Item>
-
-                          ))}
-                        </ListGroup>
-                      </Card.Body>
-                    </div>
-                  </div>
-                </Card>
-              </Col>
-            );
-          })
+                              Book
+                            </Button>
+                          </ListGroup.Item>
+                        ))}
+                      </ListGroup>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })
+          ) : (
+            <Col xs={12}>
+              <p>No results found</p> {/* Messaggio se non ci sono risultati */}
+            </Col>
+          )
         ) : (
-          [1, 2, 3, 4, 5, 6].map((key) => (
+          [1, 2, 3, 4, 5, 6].map((key) => ( // Card statiche iniziali
             <Col xs={12} md={6} xl={4} key={key}>
               <Card className="text-bg-dark">
                 <Card.Img

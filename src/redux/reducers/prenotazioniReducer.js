@@ -2,13 +2,15 @@ import {
   GET_PRENOTAZIONI,
   DELETE_PRENOTAZIONI,
   SET_ERROR,
-  ADD_PRENOTAZIONI
+  ADD_PRENOTAZIONI,
+  GET_TODAY
 } from "../actions/prenotazioniActions";
 
 
 const initialState = {
   prenotazioni: [],  
-  error: null      
+  error: null ,
+  today: []     
 };
 
 const prenotazioniReducer = (state = initialState, action) => {
@@ -19,6 +21,13 @@ const prenotazioniReducer = (state = initialState, action) => {
       return {
         ...state,
         prenotazioni: action.payload,
+        error: null,  
+      };
+
+      case GET_TODAY:
+      return {
+        ...state,
+        today: action.payload,
         error: null,  
       };
 

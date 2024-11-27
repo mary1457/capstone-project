@@ -16,7 +16,7 @@ export const getPreferiti = (accessToken) => {
       const response = await fetch(`${baseEndpoint}/me`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -58,7 +58,7 @@ export const postPreferiti = (accessToken, item) => {
       const response = await fetch(baseEndpoint, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(request),
@@ -97,7 +97,7 @@ export const deletePreferiti = (accessToken, id) => {
       const response = await fetch(`${baseEndpoint}/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });

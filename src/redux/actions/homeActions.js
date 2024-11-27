@@ -31,7 +31,7 @@ export const ricerca = (searchForm, accessToken) => {
         {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${accessToken.accessToken}`,
+            'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
           },
         }

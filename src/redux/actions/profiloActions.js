@@ -1,3 +1,5 @@
+
+
 const baseEndpoint = 'http://localhost:3001/user';
 export const SET_FIELD = "SET_FIELD";
 export const SET_ERROR = 'SET_ERROR';
@@ -19,7 +21,7 @@ export const getProfilo = (accessToken) => {
       const response = await fetch(baseEndpoint + "/me", {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
@@ -37,6 +39,7 @@ export const getProfilo = (accessToken) => {
           type: SET_ERROR,
           payload: error.message,
         });
+       
         return null;
       }
     } catch (error) {
@@ -44,6 +47,7 @@ export const getProfilo = (accessToken) => {
         type: SET_ERROR,
         payload: 'Network or server error',
       });
+      
       return null;
     }
   };
@@ -56,7 +60,7 @@ export const updateProfilo = (profileData, accessToken) => {
       const response = await fetch(`${baseEndpoint}/me`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(profileData),
@@ -94,7 +98,7 @@ export const deleteProfilo = (accessToken) => {
       const response = await fetch(`${baseEndpoint}/me`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${accessToken.accessToken}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });

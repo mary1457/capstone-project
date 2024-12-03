@@ -1,15 +1,15 @@
 const baseEndpoint = 'http://localhost:3001/auth'; 
 
 
-export const SET_FIELD = "SET_FIELD"; 
+export const SET_FIELD_REGISTER = "SET_FIELD_REGISTER"; 
 export const SET_ERROR = "SET_ERROR"; 
 export const RESET_ALL = "RESET_ALL"; 
 export const RESET_ERROR = "RESET_ERROR"; 
 export const REG_CLIENTE = "REG_CLIENTE"; 
 
 
-export const setField = ({ id, value }) => ({
-  type: SET_FIELD,
+export const setFieldRegister = ({ id, value }) => ({
+  type: SET_FIELD_REGISTER,
   payload: { id, value },
 });
 
@@ -34,8 +34,8 @@ export const registrazioneCliente = (cliente) => {
           'Content-Type': 'application/json',
         },
       });
-      
-      console.log("Response:", response);
+
+      console.log("Response status:", response.status);
 
       if (response.ok) {
         const clienteRegistrato = await response.json();
@@ -45,9 +45,10 @@ export const registrazioneCliente = (cliente) => {
         });
       } else {
         const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: errore,
+          payload: errore,  
         });
         return null;
       }
@@ -62,3 +63,4 @@ export const registrazioneCliente = (cliente) => {
     }
   };
 };
+

@@ -13,7 +13,9 @@ export const setField = ({ id, value }) => ({
   payload: { id, value },
 });
 
-
+export const resetAll = () => ({
+  type: RESET_ALL,
+});
 
 export const getProfilo = (accessToken) => {
   return async (dispatch) => {
@@ -25,7 +27,7 @@ export const getProfilo = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
-
+      console.log("Response status:", response.status);
       if (response.ok) {
         const profile = await response.json();
         dispatch({
@@ -34,20 +36,22 @@ export const getProfilo = (accessToken) => {
         });
         return profile;
       } else {
-        const error = await response.json();
+        const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: error.message,
+          payload: errore,  
         });
-       
         return null;
       }
     } catch (error) {
+      console.error('Fetch Error:', error);
+      const errore = { message: "Issue on the server side" };
       dispatch({
         type: SET_ERROR,
-        payload: 'Network or server error',
+        payload: errore,
       });
-      
+
       return null;
     }
   };
@@ -65,7 +69,7 @@ export const updateProfilo = (profileData, accessToken) => {
         },
         body: JSON.stringify(profileData),
       });
-
+      console.log("Response status:", response.status);
       if (response.ok) {
         const updatedProfile = await response.json();
         dispatch({
@@ -74,18 +78,22 @@ export const updateProfilo = (profileData, accessToken) => {
         });
         return updatedProfile;
       } else {
-        const error = await response.json();
+        const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: error.message,
+          payload: errore,  
         });
         return null;
       }
     } catch (error) {
+      console.error('Fetch Error:', error);
+      const errore = { message: "Issue on the server side" };
       dispatch({
         type: SET_ERROR,
-        payload: 'Network or server error',
+        payload: errore,
       });
+
       return null;
     }
   };
@@ -102,25 +110,29 @@ export const deleteProfilo = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
-
+      console.log("Response status:", response.status);
       if (response.ok) {
         dispatch({
           type: DELETE_PROFILO,
         });
         return true;
       } else {
-        const error = await response.json();
+        const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: error.message,
+          payload: errore,  
         });
         return false;
       }
     } catch (error) {
+      console.error('Fetch Error:', error);
+      const errore = { message: "Issue on the server side" };
       dispatch({
         type: SET_ERROR,
-        payload: 'Network or server error',
+        payload: errore,
       });
+
       return false;
     }
   };

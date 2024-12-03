@@ -8,7 +8,7 @@ const FooterMobileBC = () => {
     <Container fluid className="bg-dark text-white p-3 d-block d-lg-none">
       <Row className="d-flex justify-content-between text-center">
         <Col xs={3} md={2} className="text-center">
-          <Link to={'/'} className="text-white">
+          <Link to={'/home'} className="text-white">
             <FaStar size={30} />
             <div>Home</div>
           </Link>

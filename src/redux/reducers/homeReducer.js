@@ -1,5 +1,5 @@
-import { SET_FIELD, SET_ERROR, RESET_ALL, SET_RESULT } from '../actions/homeActions';
-
+import { SET_FIELD_SEARCH, SET_ERROR, RESET_ALL, SET_RESULT } from '../actions/homeActions';
+import { LOGOUT } from "../actions/accessTokenActions";
 const initialState = {
   searchForm: {
     trattamento: "",
@@ -12,7 +12,7 @@ const initialState = {
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_FIELD:
+    case SET_FIELD_SEARCH:
       
       return {
         ...state,
@@ -27,6 +27,7 @@ const homeReducer = (state = initialState, action) => {
       return {
         ...state,
         searchResult: action.payload,
+        error: {}, 
       };
 
     case SET_ERROR:
@@ -42,6 +43,8 @@ const homeReducer = (state = initialState, action) => {
         ...state,
         error: {},
       };
+      case LOGOUT:
+        return initialState;
 
     default:
       return state;

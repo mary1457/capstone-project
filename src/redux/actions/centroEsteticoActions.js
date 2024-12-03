@@ -1,17 +1,18 @@
+
 const baseEndpoint = 'http://localhost:3001/auth';
-const baseEndpoint1 = 'http://localhost:3001/user';
+const baseEndpointUser = 'http://localhost:3001/user';
 
 
-export const SET_FIELD = "SET_FIELD"; 
+export const SET_FIELD_REGISTER_BC = "SET_FIELD_REGISTER_BC"; 
 export const SET_ERROR = "SET_ERROR"; 
 export const RESET_ALL = "RESET_ALL"; 
 export const RESET_ERROR = "RESET_ERROR";
 export const REG_CENTRO_ESTETICO = "REG_CENTRO_ESTETICO"; 
-export const GET_CLIENTI = "GET_CLIENTI"; 
+export const GET_CLIENTI = "GET_CLIENTI";  
 
 
-export const setField = ({ id, value }) => ({
-  type: SET_FIELD,  
+export const setFieldRegisterBc = ({ id, value }) => ({
+  type: SET_FIELD_REGISTER_BC,  
   payload: { id, value }, 
 });
 
@@ -27,48 +28,50 @@ export const resetError = () => ({
 
 
 export const registrazioneCentroEstetico = (centroEstetico) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       const response = await fetch(baseEndpoint + "/registerBeautyCenter", {
         method: 'POST',
-        body: JSON.stringify(centroEstetico), 
+        body: JSON.stringify(centroEstetico),
         headers: {
-          'Content-Type': 'application/json', 
+          'Content-Type': 'application/json',
         },
       });
 
-      console.log("Response:", response); 
+      console.log("Response status:", response.status);
+
 
       if (response.ok) {
         const centroEstetico = await response.json();
         dispatch({
-          type: REG_CENTRO_ESTETICO,  
-          payload: centroEstetico,
+          type: REG_CENTRO_ESTETICO,
+          payload: centroEstetico,  
         });
       } else {
         const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: errore, 
+          payload: errore,  
         });
+        return null;
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" }; 
+      const errore = { message: "Issue on the server side" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
       });
+      return null;
     }
   };
 };
 
-
-
 export const getClienti = (accessToken) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(baseEndpoint1 + "/client", {
+      const response = await fetch(baseEndpointUser + "/clients", {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken}`,

@@ -1,4 +1,4 @@
-const baseEndpoint = 'http://localhost:3001/fav';
+const baseEndpointFav = 'http://localhost:3001/fav';
 
 export const ADD_PREFERITI = 'ADD_PREFERITI';
 export const REMOVE_PREFERITI = 'REMOVE_PREFERITI';
@@ -13,13 +13,14 @@ export const resetAll = () => ({
 export const getPreferiti = (accessToken) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${baseEndpoint}/me`, {
+      const response = await fetch(`${baseEndpointFav}/me`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
+      console.log("Response status:", response.status);
 
       if (response.ok) {
         const preferiti = await response.json();
@@ -30,18 +31,21 @@ export const getPreferiti = (accessToken) => {
         return preferiti;
       } else {
         const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: errore,
+          payload: errore,  
         });
         return null;
       }
     } catch (error) {
       console.error('Fetch Error:', error);
+      const errore = { message: "Issue on the server side" };
       dispatch({
         type: SET_ERROR,
-        payload: 'Problema lato server',
+        payload: errore,
       });
+
       return null;
     }
   };
@@ -55,7 +59,7 @@ export const postPreferiti = (accessToken, item) => {
   
   return async (dispatch) => {
     try {
-      const response = await fetch(baseEndpoint, {
+      const response = await fetch(baseEndpointFav, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
@@ -63,7 +67,7 @@ export const postPreferiti = (accessToken, item) => {
         },
         body: JSON.stringify(request),
       });
-
+      console.log("Response status:", response.status);
       if (response.ok) {
         const preferiti = await response.json();
         dispatch({
@@ -73,18 +77,21 @@ export const postPreferiti = (accessToken, item) => {
         return preferiti;
       } else {
         const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: errore,
+          payload: errore,  
         });
         return null;
       }
     } catch (error) {
       console.error('Fetch Error:', error);
+      const errore = { message: "Issue on the server side" };
       dispatch({
         type: SET_ERROR,
-        payload: 'Problema lato server',
+        payload: errore,
       });
+
       return null;
     }
   };
@@ -94,13 +101,14 @@ export const postPreferiti = (accessToken, item) => {
 export const deletePreferiti = (accessToken, id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${baseEndpoint}/${id}`, {
+      const response = await fetch(`${baseEndpointFav}/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
+      console.log("Response status:", response.status);
 
       if (response.ok) {
         dispatch({
@@ -110,18 +118,21 @@ export const deletePreferiti = (accessToken, id) => {
         return true;
       } else {
         const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: errore,
+          payload: errore,  
         });
         return false;
       }
     } catch (error) {
       console.error('Fetch Error:', error);
+      const errore = { message: "Issue on the server side" };
       dispatch({
         type: SET_ERROR,
-        payload: 'Problema lato server',
+        payload: errore,
       });
+
       return false;
     }
   };

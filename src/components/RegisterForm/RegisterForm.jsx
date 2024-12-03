@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaLock, FaPen, FaEnvelope } from 'react-icons/fa'; 
 import { Form, Button, Row, Col, InputGroup, Alert } from 'react-bootstrap'; 
-import { setField, registrazioneCliente, resetAll, resetError } from "../../redux/actions/clienteActions"; 
+import { registrazioneCliente, resetAll, resetError, setFieldRegister } from "../../redux/actions/clienteActions"; 
 
 const RegisterForm = () => {
   const dispatch = useDispatch(); 
@@ -16,7 +16,7 @@ const RegisterForm = () => {
   const handleChange = (e) => {
     const { id, value } = e.target;
     console.log(e.target)
-    dispatch(setField({ id, value })); 
+    dispatch(setFieldRegister({ id, value })); 
   };
 
   useEffect(() => {
@@ -42,18 +42,18 @@ const RegisterForm = () => {
     <Row className="h-100 d-flex justify-content-center align-items-center">
       <Col xs={12} sm={10} md={8} lg={6} xl={4}>
 
-        {result.message && (
-          <Alert variant="success" dismissible>
-            <strong>{result.message}</strong> 
-            <Button variant="link" className="btn-close" onClick={handleClose} aria-label="Close" />
-          </Alert>
-        )}
+      {result && result.message && (
+  <Alert variant="success" dismissible>
+    <strong>{result.message}</strong> 
+    <Button variant="link" className="btn-close" onClick={handleClose} aria-label="Close" />
+  </Alert>
+)}
 
-        {error.message && (
-          <Alert variant="danger" dismissible onClose={handleCloseError}>
-            <strong>{error.message}</strong> 
-          </Alert>
-        )}
+{error && error.message && (
+  <Alert variant="danger" dismissible onClose={handleCloseError} >
+    <strong>{error.message}</strong> 
+  </Alert>
+)}
 
         <div className="p-4 border rounded shadow">
           <h1 className="text-center text-dark mb-4">Register</h1>

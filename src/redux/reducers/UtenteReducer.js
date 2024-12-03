@@ -4,12 +4,14 @@ import {
   RESET_ALL,
   RESET_ERROR,
   LOG_UTENTE,
+
 } from "../actions/utenteActions";
+
+import { LOGOUT } from "../actions/accessTokenActions";
 
 const initialState = {
   form: {
-    nome: "",
-    cognome: "",
+  
     email: "",
     password: "",
   },
@@ -20,6 +22,7 @@ const initialState = {
 const utenteReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_FIELD_LOGIN:
+    
       return {
         ...state,
         form: {
@@ -28,31 +31,41 @@ const utenteReducer = (state = initialState, action) => {
         },
       };
 
+
+      case RESET_ALL:
+  return initialState;
+
+
     case SET_ERROR:
+     
       return {
         ...state,
-        error: action.payload, 
+        error:  action.payload ,
       };
 
-    case RESET_ALL:
-      return {
-        ...initialState, 
-      };
+  
 
     case RESET_ERROR:
+      
       return {
         ...state,
-        error: null, 
+        error: {},
       };
 
     case LOG_UTENTE:
+     
       return {
         ...state,
-        utente: action.payload, 
-        error: null, 
+        utente: action.payload,
+        error: {}, 
       };
 
+
+      case LOGOUT:
+              return initialState;
+
     default:
+     
       return state;
   }
 };

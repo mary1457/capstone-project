@@ -29,7 +29,7 @@ export const login = (utente) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log("Response:", response);
+      console.log("Response status:", response.status);
 
       if (response.ok) {
         const userData = await response.json();
@@ -39,31 +39,21 @@ export const login = (utente) => {
         });
         return userData;
       } else {
-        const errorData = await response.json();
+        const errore = await response.json();
         dispatch({
           type: SET_ERROR,
-          payload: errorData,
+          payload: errore,
         });
         return null;
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const serverError = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side" };
       dispatch({
         type: SET_ERROR,
-        payload: serverError,
+        payload: errore,
       });
       return null;
     }
   };
 };
-
-
-
-
-
-
-
-
-
-

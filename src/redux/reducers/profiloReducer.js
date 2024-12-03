@@ -1,5 +1,5 @@
 import { GET_PROFILO, UPDATE_PROFILO, DELETE_PROFILO, SET_ERROR, RESET_ALL, SET_FIELD } from "../actions/profiloActions";
-
+import { LOGOUT } from "../actions/accessTokenActions";
 const initialState = {
   profile: {
     nome: "",
@@ -31,20 +31,21 @@ const profiloReducer = (state = initialState, action) => {
       return {
         ...state,
         profile: action.payload,
-       
+        error: {},  
       };
 
     case UPDATE_PROFILO:
       return {
         ...state,
         profile: action.payload,
-       
+        error: {},
       };
 
     case DELETE_PROFILO:
       return {
         ...state,
         profile: null, 
+        error: {},
       };
 
     case SET_ERROR:
@@ -59,6 +60,9 @@ const profiloReducer = (state = initialState, action) => {
         ...state,
         error: {},
       };
+
+      case LOGOUT:
+        return initialState;
 
     default:
       return state;

@@ -1,55 +1,80 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux'; // Importa useSelector per accedere allo stato Redux
 
 import LoginForm from './components/LoginForm/LoginForm';
 import RegisterForm from './components/RegisterForm/RegisterForm';
 import RegisterBeautyCenterForm from './components/RegisterBeautyCenterForm/RegisterBeautyCenterForm';
 
-// Import delle pagine per Cliente
-import ClientHome from './components/ClientPages/UtenteHome';
-import ClientHomePage from './components/ClientPages/ClientHomePage';
-import ClientFavPage from './components/ClientPages/ClientFavPage';
-import ClientResPage from './components/ClientPages/ClientResPage';
-import ClientProfilePage from './components/ClientPages/ClientProfilePage';
 
-// Import delle pagine per Centro Estetico
-import BeautyCenterHomePage from './components/BeautyCenterPages/BeautyCenterHomePage';
-import BeautyCenterClientsPage from './components/BeautyCenterPages/BeautyCenterClientsPage';
-import BeautyCenterResPage from './components/BeautyCenterPages/BeautyCenterResPage';
-import BeautyCenterProfilePage from './components/BeautyCenterPages/BeautyCenterProfilePage';
+import UtenteHome from './components/UtentePages/UtenteHome';
+
+
+import ClientHomePage from './components/ClientePages/ClientHomePage';
+import ClientFavPage from './components/ClientePages/ClientFavPage';
+import ClientResPage from './components/ClientePages/ClientResPage';
+import ClientProfilePage from './components/ClientePages/ClientProfilePage';
+
+
+import BeautyCenterHomePage from './components/CentroEsteticoPages/BeautyCenterHomePage';
+import BeautyCenterClientsPage from './components/CentroEsteticoPages/BeautyCenterClientsPage';
+import BeautyCenterResPage from './components/CentroEsteticoPages/BeautyCenterResPage';
+import BeautyCenterProfilePage from './components/CentroEsteticoPages/BeautyCenterProfilePage';
 
 function App() {
-  const userType = useSelector((state) => state.accessToken.userType); // Accedi al tipo di utente
+ 
+
+  
+
+
+  const [userType, setUserType] = useState(localStorage.getItem("userType") || sessionStorage.getItem("userType"));
+  const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken"));
+
+ 
+  const handleLogin = (userData) => {
+    const { accessToken, userType } = userData;
+    setAccessToken(accessToken);
+    setUserType(userType);
+
+    
+  };
+
+  
 
   return (
     <BrowserRouter>
       <Container fluid className="h-100">
         <Routes>
-          {/* Rotte per la pagina di login e registrazione */}
-          <Route path="/login" element={<LoginForm />} />
+          {/* Rotte per login e registrazione */}
+          <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/registerBeautyCenter" element={<RegisterBeautyCenterForm />} />
 
-          {/* Rotte condizionate per il tipo di utente */}
-          {userType === 'cliente' ? (
-            <Route path="/" element={<ClientHome />} >
-              <Route path="" element={<ClientHomePage />} />
-              <Route path="fav" element={<ClientFavPage />} />
-              <Route path="res" element={<ClientResPage />} />
-              <Route path="profile" element={<ClientProfilePage />} />
-            </Route>
-          ) : null}
+          {/* Rotte protette per utenti autenticati */}
+          <Route path="/" element={<UtenteHome />}>
+            {/* Rotte per clienti */}
+            {userType === 'cliente' && accessToken ? (
+              <>
+                <Route path="home" element={<ClientHomePage />} />
+                <Route path="fav" element={<ClientFavPage />} />
+                <Route path="res" element={<ClientResPage />} />
+                <Route path="profile" element={<ClientProfilePage />} />
+              </>
+            ) : null}
 
-          {userType === 'centroEstetico' ? (
-            <Route path="/" element={<ClientHome />} >
-              <Route path="" element={<BeautyCenterHomePage />} />
-              <Route path="clients" element={<BeautyCenterClientsPage />} />
-              <Route path="resBeautyCenter" element={<BeautyCenterResPage />} />
-              <Route path="profileBeautyCenter" element={<BeautyCenterProfilePage />} />
-            </Route>
-          ) : null}
+            {/* Rotte per centro estetico */}
+            {userType === 'centroEstetico' && accessToken ? (
+              <>
+                <Route path="home" element={<BeautyCenterHomePage />} />
+                <Route path="clients" element={<BeautyCenterClientsPage />} />
+                <Route path="resBeautyCenter" element={<BeautyCenterResPage />} />
+                <Route path="profileBeautyCenter" element={<BeautyCenterProfilePage />} />
+              </>
+            ) : null}
+          </Route>
+
+          {/* Se l'utente non è autenticato, reindirizza a login */}
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Container>
     </BrowserRouter>

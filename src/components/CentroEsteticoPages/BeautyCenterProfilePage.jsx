@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfilo, updateProfilo, deleteProfilo, setField } from '../../redux/actions/profiloActions';
 import { useNavigate } from 'react-router-dom';
 
-const ClientProfilePage = () => {
+const BeautyCenterProfilePage = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.profilo.profile);
   const profileForm = useSelector((state) => state.profilo.profileForm);
   const accessToken = useSelector((state) => state.accessToken.accessToken);
   const navigate = useNavigate();
+
+
 
   const [showModal, setShowModal] = useState(false);
 
@@ -27,7 +29,7 @@ const ClientProfilePage = () => {
 
   const handleDelete = () => {
     dispatch(deleteProfilo(accessToken));
-    navigate('/login');
+    navigate('/register');
   };
 
   const handleChange = (e) => {
@@ -134,4 +136,4 @@ const ClientProfilePage = () => {
   );
 };
 
-export default ClientProfilePage;
+export default BeautyCenterProfilePage;

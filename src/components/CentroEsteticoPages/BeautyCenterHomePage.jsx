@@ -106,7 +106,7 @@ const BeautyCenterHomePage = () => {
             step={60} // Imposta la durata minima per la selezione a 60 minuti
             timeslots={1} // Imposta il numero di slot orari disponibili
             min={new Date(2000, 0, 1, 8, 0)} // Imposta l'orario minimo (8:00)
-            max={new Date(2000, 0, 1, 18, 0)} // Imposta l'orario massimo (18:00)
+            max={new Date(2000, 0, 1, 19, 0)} // Imposta l'orario massimo (18:00)
             onSelectSlot={(slotInfo) => console.log('Slot selezionato:', slotInfo)} // Azione su selezione slot
             onNavigate={(date) => console.log(date)} // Azione su navigazione nel calendario
           />

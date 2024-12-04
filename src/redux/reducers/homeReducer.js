@@ -1,10 +1,11 @@
-import { SET_FIELD_SEARCH, SET_ERROR, RESET_ALL, SET_RESULT } from '../actions/homeActions';
-import { LOGOUT } from "../actions/accessTokenActions";
+import { SET_FIELD_SEARCH, SET_ERROR, RESET_ERROR, SET_RESULT } from '../actions/homeActions';
+import { DELETE } from "../actions/accessTokenActions";
+
 const initialState = {
   searchForm: {
     trattamento: "",
     citta: "",
-    dataPrenotazione:""
+    dataPrenotazione: ""
   },
   searchResult: [], 
   error: {}, 
@@ -13,7 +14,6 @@ const initialState = {
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_FIELD_SEARCH:
-      
       return {
         ...state,
         searchForm: {
@@ -23,7 +23,6 @@ const homeReducer = (state = initialState, action) => {
       };
 
     case SET_RESULT:
-     
       return {
         ...state,
         searchResult: action.payload,
@@ -31,20 +30,19 @@ const homeReducer = (state = initialState, action) => {
       };
 
     case SET_ERROR:
-     
       return {
         ...state,
-        error: action.payload,
+        error: action.payload || { message: "An unknown error occurred" },
       };
 
-    case RESET_ALL:
-      
+    case RESET_ERROR:
       return {
         ...state,
         error: {},
       };
-      case LOGOUT:
-        return initialState;
+
+    case DELETE:
+      return initialState;
 
     default:
       return state;

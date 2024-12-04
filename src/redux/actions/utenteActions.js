@@ -48,7 +48,7 @@ export const login = (utente) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,

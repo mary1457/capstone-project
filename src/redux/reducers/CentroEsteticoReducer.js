@@ -1,5 +1,5 @@
 import { 
-  SET_FIELD_REGISTER_BC,  // Usa il tipo giusto per impostare il campo
+  SET_FIELD_REGISTER_BC,  
   SET_ERROR,
   RESET_ALL,
   RESET_ERROR,
@@ -7,7 +7,7 @@ import {
   GET_CLIENTI
 } from "../actions/centroEsteticoActions";
 
-import { LOGOUT } from "../actions/accessTokenActions";
+import { DELETE } from "../actions/accessTokenActions";
 
 const initialState = {
   form: {
@@ -40,14 +40,15 @@ const centroEsteticoReducer = (state = initialState, action) => {
     case REG_CENTRO_ESTETICO:
       return {
         ...state,
-        result: action.payload ,  
-        error: {},
+        result: action.payload,  
+        error: {},  
       };
 
     case SET_ERROR:
+      
       return {
         ...state,
-        error: action.payload ,  
+        error: action.payload || { message: "An unknown error occurred" },  
       };
 
     case RESET_ALL:
@@ -76,11 +77,12 @@ const centroEsteticoReducer = (state = initialState, action) => {
     case GET_CLIENTI:
       return {
         ...state,
-        clients: action.payload ,  
+        clients: action.payload, 
+        error: {},  
       };
 
-      case LOGOUT:
-        return initialState;
+    case DELETE:
+      return initialState; 
 
     default:
       return state;

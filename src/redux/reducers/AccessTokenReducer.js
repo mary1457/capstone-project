@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN} from "../actions/accessTokenActions";
-import { LOGOUT } from "../actions/accessTokenActions";
+import { DELETE } from "../actions/accessTokenActions";
 const initialState = {
    accessToken: null,
    userType: null,
@@ -15,7 +15,7 @@ const initialState = {
               userType: action.payload.userType,
             };
 
-            case LOGOUT:
+            case DELETE:
               return initialState;
   
       default:

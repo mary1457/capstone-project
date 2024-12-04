@@ -1,20 +1,20 @@
-
-
 const baseEndpoint = 'http://localhost:3001/user';
+
 export const SET_FIELD = "SET_FIELD";
 export const SET_ERROR = 'SET_ERROR';
 export const GET_PROFILO = 'GET_PROFILO'; 
 export const UPDATE_PROFILO = 'UPDATE_PROFILO';
 export const DELETE_PROFILO = 'DELETE_PROFILO';
-export const RESET_ALL = "RESET_ALL"; 
+export const RESET_ERROR = "RESET_ERROR";
+export const GET_PROFILO_BC = 'GET_PROFILO_BC';
 
 export const setField = ({ id, value }) => ({
   type: SET_FIELD,
   payload: { id, value },
 });
 
-export const resetAll = () => ({
-  type: RESET_ALL,
+export const resetError = () => ({
+  type: RESET_ERROR,
 });
 
 export const getProfilo = (accessToken) => {
@@ -27,7 +27,9 @@ export const getProfilo = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
+
       console.log("Response status:", response.status);
+
       if (response.ok) {
         const profile = await response.json();
         dispatch({
@@ -37,7 +39,7 @@ export const getProfilo = (accessToken) => {
         return profile;
       } else {
         const errore = await response.json();
-        console.log("API Error:", errore); 
+        console.log("API Error:", errore);
         dispatch({
           type: SET_ERROR,
           payload: errore,  
@@ -46,17 +48,15 @@ export const getProfilo = (accessToken) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
       });
-
       return null;
     }
   };
 };
-
 
 export const updateProfilo = (profileData, accessToken) => {
   return async (dispatch) => {
@@ -69,7 +69,9 @@ export const updateProfilo = (profileData, accessToken) => {
         },
         body: JSON.stringify(profileData),
       });
+
       console.log("Response status:", response.status);
+
       if (response.ok) {
         const updatedProfile = await response.json();
         dispatch({
@@ -79,7 +81,7 @@ export const updateProfilo = (profileData, accessToken) => {
         return updatedProfile;
       } else {
         const errore = await response.json();
-        console.log("API Error:", errore); 
+        console.log("API Error:", errore);
         dispatch({
           type: SET_ERROR,
           payload: errore,  
@@ -88,17 +90,15 @@ export const updateProfilo = (profileData, accessToken) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
       });
-
       return null;
     }
   };
 };
-
 
 export const deleteProfilo = (accessToken) => {
   return async (dispatch) => {
@@ -110,7 +110,9 @@ export const deleteProfilo = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
+
       console.log("Response status:", response.status);
+
       if (response.ok) {
         dispatch({
           type: DELETE_PROFILO,
@@ -118,7 +120,7 @@ export const deleteProfilo = (accessToken) => {
         return true;
       } else {
         const errore = await response.json();
-        console.log("API Error:", errore); 
+        console.log("API Error:", errore);
         dispatch({
           type: SET_ERROR,
           payload: errore,  
@@ -127,13 +129,64 @@ export const deleteProfilo = (accessToken) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
+      dispatch({
+        type: SET_ERROR,
+        payload: errore,
+      });
+      return false;
+    }
+  };
+};
+
+export const getProfiloBC = (accessToken) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`${baseEndpoint}/centroEstetico`, { 
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log("Response status:", response.status);
+
+      if (response.ok) {
+        const profileBc = await response.json();
+        console.log("Profile fetched:", profileBc);
+
+        
+        dispatch({
+          type: GET_PROFILO_BC,
+          payload: profileBc,
+        });
+
+        return profileBc;
+      } else {
+        const errore = await response.json();
+        console.log("API Error:", errore);
+
+       
+        dispatch({
+          type: SET_ERROR,
+          payload: errore,
+        });
+
+        return null;
+      }
+    } catch (error) {
+      console.error('Fetch Error:', error);
+
+      
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
       });
 
-      return false;
+      return null;
     }
   };
 };
+

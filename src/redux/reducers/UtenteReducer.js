@@ -7,7 +7,7 @@ import {
 
 } from "../actions/utenteActions";
 
-import { LOGOUT } from "../actions/accessTokenActions";
+import { DELETE} from "../actions/accessTokenActions";
 
 const initialState = {
   form: {
@@ -40,7 +40,7 @@ const utenteReducer = (state = initialState, action) => {
      
       return {
         ...state,
-        error:  action.payload ,
+        error:  action.payload || { message: "An unknown error occurred" } ,
       };
 
   
@@ -61,7 +61,7 @@ const utenteReducer = (state = initialState, action) => {
       };
 
 
-      case LOGOUT:
+      case DELETE:
               return initialState;
 
     default:

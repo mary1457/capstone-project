@@ -4,22 +4,21 @@ import {
   SET_ERROR,
   ADD_PRENOTAZIONI,
   GET_TODAY,
-  GET_MONTH, 
-  RESET_ALL
+  GET_CALENDAR, 
+  RESET_ERROR
 } from "../actions/prenotazioniActions";
-import { LOGOUT } from "../actions/accessTokenActions";
+import { DELETE } from "../actions/accessTokenActions";
 
 const initialState = {
   prenotazioni: [],  
   error: {},
-  today: [] ,
-  month:[]    
+  today: [],
+  eventi:[]    
 };
 
 const prenotazioniReducer = (state = initialState, action) => {
   switch (action.type) {
 
-    
     case GET_PRENOTAZIONI:
       return {
         ...state,
@@ -27,29 +26,27 @@ const prenotazioniReducer = (state = initialState, action) => {
         error: {},  
       };
 
-      case GET_TODAY:
+    case GET_TODAY:
       return {
         ...state,
         today: action.payload,
         error: {},  
       };
 
-      case GET_MONTH:
-        return {
-          ...state,
-          month: action.payload,
-          error: {},  
-        };
+    case GET_CALENDAR:
+      return {
+        ...state,
+        eventi: action.payload,
+        error: {},  
+      };
 
-      case ADD_PRENOTAZIONI:
-     
+    case ADD_PRENOTAZIONI:
       return {
         ...state,
         prenotazioni: [...state.prenotazioni, action.payload], 
         error: {}, 
       };
 
-   
     case DELETE_PRENOTAZIONI:
       return {
         ...state,
@@ -57,22 +54,20 @@ const prenotazioniReducer = (state = initialState, action) => {
         error: {},  
       };
 
-    
     case SET_ERROR:
       return {
         ...state,
-        error: action.payload,  
+        error: action.payload || { message: "An unknown error occurred" },  
       };
 
-      case RESET_ALL:
-      
+    case RESET_ERROR:
       return {
         ...state,
         error: {},
       };
 
-      case LOGOUT:
-        return initialState;
+    case DELETE:
+      return initialState;
 
     default:
       return state;

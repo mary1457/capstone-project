@@ -1,5 +1,6 @@
-import { ADD_PREFERITI, REMOVE_PREFERITI, GET_PREFERITI , SET_ERROR, RESET_ALL} from "../actions/preferitiActions";
-import { LOGOUT } from "../actions/accessTokenActions";
+import { ADD_PREFERITI, REMOVE_PREFERITI, GET_PREFERITI, SET_ERROR, RESET_ERROR } from "../actions/preferitiActions";
+import { DELETE } from "../actions/accessTokenActions";
+
 const initialState = {
   preferiti: [], 
   error: {}, 
@@ -13,11 +14,9 @@ const preferitiReducer = (state = initialState, action) => {
         ...state,
         preferiti: action.payload, 
         error: {}
-
       };
 
     case ADD_PREFERITI:
-     
       return {
         ...state,
         preferiti: [...state.preferiti, action.payload], 
@@ -25,30 +24,26 @@ const preferitiReducer = (state = initialState, action) => {
       };
 
     case REMOVE_PREFERITI:
-     
       return {
         ...state,
         preferiti: state.preferiti.filter((item) => item.id !== action.payload), 
         error: {}
       };
 
-
-      case SET_ERROR:
-     
+    case SET_ERROR:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload || { message: "An unknown error occurred" },
       };
 
-    case RESET_ALL:
-      
+    case RESET_ERROR:
       return {
         ...state,
         error: {},
       };
 
-      case LOGOUT:
-        return initialState;
+    case DELETE:
+      return initialState;
 
     default:
       return state;

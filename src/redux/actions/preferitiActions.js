@@ -4,10 +4,10 @@ export const ADD_PREFERITI = 'ADD_PREFERITI';
 export const REMOVE_PREFERITI = 'REMOVE_PREFERITI';
 export const SET_ERROR = 'SET_ERROR';
 export const GET_PREFERITI = 'GET_PREFERITI';
-export const RESET_ALL = "RESET_ALL"; 
+export const RESET_ERROR = "RESET_ERROR";
 
-export const resetAll = () => ({
-  type: RESET_ALL,
+export const resetError = () => ({
+  type: RESET_ERROR,
 });
 
 export const getPreferiti = (accessToken) => {
@@ -40,7 +40,7 @@ export const getPreferiti = (accessToken) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
@@ -50,7 +50,6 @@ export const getPreferiti = (accessToken) => {
     }
   };
 };
-
 
 export const postPreferiti = (accessToken, item) => {
   const request = {
@@ -68,6 +67,7 @@ export const postPreferiti = (accessToken, item) => {
         body: JSON.stringify(request),
       });
       console.log("Response status:", response.status);
+
       if (response.ok) {
         const preferiti = await response.json();
         dispatch({
@@ -86,7 +86,7 @@ export const postPreferiti = (accessToken, item) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
@@ -96,7 +96,6 @@ export const postPreferiti = (accessToken, item) => {
     }
   };
 };
-
 
 export const deletePreferiti = (accessToken, id) => {
   return async (dispatch) => {
@@ -127,7 +126,7 @@ export const deletePreferiti = (accessToken, id) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,

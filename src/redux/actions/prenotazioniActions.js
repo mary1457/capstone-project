@@ -2,16 +2,14 @@ const baseEndpoint = 'http://localhost:3001/res';
 
 export const GET_PRENOTAZIONI = "GET_PRENOTAZIONI"; 
 export const GET_TODAY = "GET_TODAY"; 
-export const GET_MONTH = "GET_MONTH"; 
+export const GET_CALENDAR = "GET_CALENDAR"; 
 export const DELETE_PRENOTAZIONI = "DELETE_PRENOTAZIONI";
 export const SET_ERROR = 'SET_ERROR';
 export const ADD_PRENOTAZIONI = 'ADD_PRENOTAZIONI';
+export const RESET_ERROR = "RESET_ERROR";
 
-
-export const RESET_ALL = "RESET_ALL"; 
-
-export const resetAll = () => ({
-  type: RESET_ALL,
+export const resetError = () => ({
+  type: RESET_ERROR,
 });
 
 export const getPrenotazioni = (accessToken) => {
@@ -44,7 +42,7 @@ export const getPrenotazioni = (accessToken) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
@@ -57,7 +55,8 @@ export const getPrenotazioni = (accessToken) => {
 
 export const postPrenotazioni = (accessToken, item, data) => {
   const request = {
-    centroEsteticoId: item, data: data
+    centroEsteticoId: item.id,
+    data: data,
   };
   
   return async (dispatch) => {
@@ -90,7 +89,7 @@ export const postPrenotazioni = (accessToken, item, data) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
@@ -100,7 +99,6 @@ export const postPrenotazioni = (accessToken, item, data) => {
     }
   };
 };
-
 
 export const deletePrenotazioni = (accessToken, id) => {
   return async (dispatch) => {
@@ -120,7 +118,7 @@ export const deletePrenotazioni = (accessToken, id) => {
           payload: id,
         });
         return true;
-      }else {
+      } else {
         const errore = await response.json();
         console.log("API Error:", errore); 
         dispatch({
@@ -131,7 +129,7 @@ export const deletePrenotazioni = (accessToken, id) => {
       }
     } catch (error) {
       console.error('Fetch Error:', error);
-      const errore = { message: "Issue on the server side" };
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
         payload: errore,
@@ -141,7 +139,6 @@ export const deletePrenotazioni = (accessToken, id) => {
     }
   };
 };
-
 
 export const getToday = (accessToken) => {
   return async (dispatch) => {
@@ -153,7 +150,7 @@ export const getToday = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
-
+      console.log("Response status:", response.status);
       if (response.ok) {
         const today = await response.json();
         dispatch({
@@ -162,18 +159,20 @@ export const getToday = (accessToken) => {
         });
         return today;
       } else {
-        const error = await response.json();
+        const errore = await response.json();
+        console.log("API Error:", errore); 
         dispatch({
           type: SET_ERROR,
-          payload: error.message,
+          payload: errore,
         });
-       
         return null;
       }
     } catch (error) {
+      console.error('Fetch Error:', error);
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
-        payload: 'Network or server error',
+        payload: errore,
       });
       
       return null;
@@ -181,38 +180,39 @@ export const getToday = (accessToken) => {
   };
 };
 
-
-export const getMonth = (accessToken) => {
+export const getCalendar = (accessToken) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(baseEndpoint + "/month", {
+      const response = await fetch(baseEndpoint + "/calendar", {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         },
       });
-
+      console.log("Response status:", response.status);
       if (response.ok) {
-        const month = await response.json();
+        const eventi = await response.json();
         dispatch({
-          type: GET_MONTH,
-          payload: month,
+          type: GET_CALENDAR,
+          payload: eventi,
         });
-        return month;
+        return eventi;
       } else {
-        const error = await response.json();
+        const errore = await response.json();
+        console.log("API Error:", errore);
         dispatch({
           type: SET_ERROR,
-          payload: error.message,
+          payload: errore,
         });
-       
         return null;
       }
     } catch (error) {
+      console.error('Fetch Error:', error);
+      const errore = { message: "Issue on the server side. Please try again later" };
       dispatch({
         type: SET_ERROR,
-        payload: 'Network or server error',
+        payload: errore,
       });
       
       return null;

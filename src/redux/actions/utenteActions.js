@@ -29,7 +29,7 @@ export const login = (utente) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log("Response status:", response.status);
+     
 
       if (response.ok) {
         const userData = await response.json();

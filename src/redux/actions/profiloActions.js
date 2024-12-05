@@ -28,7 +28,7 @@ export const getProfilo = (accessToken) => {
         },
       });
 
-      console.log("Response status:", response.status);
+     
 
       if (response.ok) {
         const profile = await response.json();
@@ -70,8 +70,7 @@ export const updateProfilo = (profileData, accessToken) => {
         body: JSON.stringify(profileData),
       });
 
-      console.log("Response status:", response.status);
-
+      
       if (response.ok) {
         const updatedProfile = await response.json();
         dispatch({
@@ -111,7 +110,7 @@ export const deleteProfilo = (accessToken) => {
         },
       });
 
-      console.log("Response status:", response.status);
+    
 
       if (response.ok) {
         dispatch({
@@ -142,7 +141,7 @@ export const deleteProfilo = (accessToken) => {
 export const getProfiloBC = (accessToken) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${baseEndpoint}/centroEstetico`, { 
+      const response = await fetch(`${baseEndpoint}/bc`, { 
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
@@ -150,12 +149,10 @@ export const getProfiloBC = (accessToken) => {
         },
       });
 
-      console.log("Response status:", response.status);
-
+     
       if (response.ok) {
         const profileBc = await response.json();
-        console.log("Profile fetched:", profileBc);
-
+      
         
         dispatch({
           type: GET_PROFILO_BC,

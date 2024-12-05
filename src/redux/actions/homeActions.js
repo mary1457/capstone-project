@@ -32,7 +32,7 @@ export const ricerca = (searchForm, accessToken) => {
           },
         }
       );
-      console.log("Response status:", response.status);
+    
 
       if (response.ok) {
         const ricerca = await response.json();

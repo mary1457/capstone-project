@@ -22,7 +22,7 @@ export const getPrenotazioni = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log("Response status:", response.status);
+      
 
       if (response.ok) {
         const prenotazioni = await response.json();
@@ -69,7 +69,7 @@ export const postPrenotazioni = (accessToken, item, data) => {
         },
         body: JSON.stringify(request),
       });
-      console.log("Response status:", response.status);
+    
 
       if (response.ok) {
         const prenotazione = await response.json();
@@ -110,7 +110,7 @@ export const deletePrenotazioni = (accessToken, id) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log("Response status:", response.status);
+    
 
       if (response.ok) {
         dispatch({
@@ -150,7 +150,7 @@ export const getToday = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log("Response status:", response.status);
+     
       if (response.ok) {
         const today = await response.json();
         dispatch({
@@ -190,7 +190,7 @@ export const getCalendar = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log("Response status:", response.status);
+     
       if (response.ok) {
         const eventi = await response.json();
         dispatch({

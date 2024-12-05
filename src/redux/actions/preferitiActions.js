@@ -20,7 +20,7 @@ export const getPreferiti = (accessToken) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log("Response status:", response.status);
+    
 
       if (response.ok) {
         const preferiti = await response.json();
@@ -66,7 +66,7 @@ export const postPreferiti = (accessToken, item) => {
         },
         body: JSON.stringify(request),
       });
-      console.log("Response status:", response.status);
+     
 
       if (response.ok) {
         const preferiti = await response.json();
@@ -107,8 +107,7 @@ export const deletePreferiti = (accessToken, id) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log("Response status:", response.status);
-
+    
       if (response.ok) {
         dispatch({
           type: REMOVE_PREFERITI,

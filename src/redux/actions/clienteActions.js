@@ -30,7 +30,7 @@ export const registrazioneCliente = (cliente) => {
         },
       });
 
-      console.log("Response status:", response.status);
+      
 
       if (response.ok) {
         const clienteRegistrato = await response.json();

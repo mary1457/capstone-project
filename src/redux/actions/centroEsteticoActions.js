@@ -36,7 +36,7 @@ export const registrazioneCentroEstetico = (centroEstetico) => {
         },
       });
 
-      console.log("Response status:", response.status);
+      
 
       if (response.ok) {
         const centroEsteticoData = await response.json();
@@ -75,7 +75,7 @@ export const getClienti = (accessToken) => {
         },
       });
 
-      console.log("Response status:", response.status);
+     
 
       if (response.ok) {
         const clienti = await response.json();

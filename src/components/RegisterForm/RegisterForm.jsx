@@ -15,7 +15,7 @@ const RegisterForm = () => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    console.log(e.target)
+   
     dispatch(setFieldRegister({ id, value })); 
   };
 

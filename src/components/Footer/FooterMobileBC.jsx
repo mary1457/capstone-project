@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import {  FaHeart, FaCalendarAlt, FaUser, FaStar, FaAddressBook } from 'react-icons/fa';
+import {  FaCalendarAlt, FaUser, FaStar, FaAddressBook } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const FooterMobileBC = () => {

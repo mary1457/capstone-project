@@ -47,7 +47,7 @@ Il progetto si pone come obiettivo principale:
 ### Installazione
 
 1. **Clone del repository**:
-    git clone https://github.com/<username>/glowbook.git
+    git clone https://github.com/mary1457/capstone-project
     cd capstone-project
 
 2. **Configurazione frontend**:

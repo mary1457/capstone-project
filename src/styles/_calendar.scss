@@ -24,19 +24,16 @@
 
   
 
-  .rbc-selected {
-    background-color: black !important; 
-   
-  }
+  
 
   .rbc-event {
     background-color: $primary-color !important; 
     width: 100%;
-    border: none;
-   
-    
+    border: 1px solid darken($primary-color, 10%) !important;
   }
+  
 
+  
   .rbc-btn-group {
     button {
       background-color: $primary-color !important; 

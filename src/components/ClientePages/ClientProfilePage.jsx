@@ -16,6 +16,18 @@ const ClientProfilePage = () => {
   const [showModal, setShowModal] = useState(false); 
   const navigate = useNavigate();
 
+  const getInitials = (name, surname) => {
+    const firstInitial = name ? name.charAt(0).toUpperCase() : '';
+    const lastInitial = surname ? surname.charAt(0).toUpperCase() : '';
+    return `${firstInitial}${lastInitial}`;
+  };
+
+  
+  const generateAvatarUrl = (name, surname, background = 'e9516c', color = 'fde9d2') => {
+    const initials = getInitials(name, surname);
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=${background}&color=${color}`;
+  };
+
   
   useEffect(() => {
     if (accessToken) {
@@ -68,6 +80,11 @@ const ClientProfilePage = () => {
     };
   }, [dispatch]);
 
+  const handleLogout = () => {
+    dispatch(clearStorageAndStore()); 
+    navigate('/login'); 
+  };
+
   return (
     <Container fluid className="p-4">
       
@@ -89,7 +106,7 @@ const ClientProfilePage = () => {
               <div className="text-center mt-3">
              
                 <Card.Img
-                  src={profile.avatar}
+                  src={generateAvatarUrl(profile.nome, profile.cognome)}
                   alt="Profile"
                   className="rounded-circle custom-img"
                   style={{ width: '150px', height: '150px', objectFit: 'cover' }}
@@ -106,6 +123,9 @@ const ClientProfilePage = () => {
                   <Button variant="success" onClick={() => setShowModal(true)}>
                     Edit
                   </Button>
+                  <Button variant="warning" onClick={handleLogout} >
+                   Logout
+                 </Button>
                 
                   <Button variant="danger" onClick={handleDelete}>
                     Delete

@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, Button, Modal, InputGroup, Form, Alert, Spin
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfiloBC, resetError } from '../../redux/actions/profiloActions';
 import { useNavigate } from 'react-router-dom';
+import { clearStorageAndStore } from '../../redux/actions/accessTokenActions';
 
 const BeautyCenterProfilePage = () => {
   const dispatch = useDispatch();
@@ -13,14 +14,14 @@ const BeautyCenterProfilePage = () => {
   const error = useSelector((state) => state.profilo.error); 
   const [loading, setLoading] = useState(true); 
   
-  // Funzione per calcolare le iniziali del nome e cognome
+  
   const getInitials = (name, surname) => {
     const firstInitial = name ? name.charAt(0).toUpperCase() : '';
     const lastInitial = surname ? surname.charAt(0).toUpperCase() : '';
     return `${firstInitial}${lastInitial}`;
   };
 
-  // Funzione per generare l'URL dell'avatar
+  
   const generateAvatarUrl = (name, surname, background = 'e9516c', color = 'fde9d2') => {
     const initials = getInitials(name, surname);
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=${background}&color=${color}`;
@@ -42,6 +43,11 @@ const BeautyCenterProfilePage = () => {
       dispatch(resetError()); 
     };
   }, [dispatch]);
+
+  const handleLogout = () => {
+    dispatch(clearStorageAndStore()); 
+    navigate('/login'); 
+  };
 
   return (
     <Container fluid className="p-4">
@@ -80,6 +86,14 @@ const BeautyCenterProfilePage = () => {
                 <Card.Text>
                   {profileBc.email} 
                 </Card.Text>
+                <div className="d-flex justify-content-center gap-3">
+                 
+                 <Button variant="warning" onClick={handleLogout} >
+                   Logout
+                 </Button>
+               
+                 
+               </div>
               </Card.Body>
             </Card>
           </Col>

@@ -58,11 +58,11 @@ const LoginForm = ({ onLogin }) => {
           </Alert>
         )}
 
-        <div className="p-4 border rounded shadow">
+        <div className="p-4 custom-border">
           <h1 className="text-center text-dark mb-4">Login</h1>
           <Form id="login-form" onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="email">
-              <InputGroup>
+            <Form.Group className="mb-3 custom-input" controlId="email">
+              <InputGroup >
                 <Form.Control
                   type="email"
                   placeholder="Email"
@@ -76,8 +76,8 @@ const LoginForm = ({ onLogin }) => {
               </InputGroup>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="password">
-              <InputGroup>
+            <Form.Group className="mb-3 custom-input" controlId="password">
+              <InputGroup >
                 <Form.Control
                   type="password"
                   placeholder="Password"
@@ -97,23 +97,24 @@ const LoginForm = ({ onLogin }) => {
                 label="Remember me"
                 checked={rememberMe}
                 onChange={handleRememberMeChange}
+                className="custom-checkbox"
               />
-              <a href="#">Forgot password?</a>
+              <a href="#" className="custom-link">Forgot password?</a>
             </div>
 
-            <Button variant="primary" type="submit" className="w-100">
+            <Button variant="primary" type="submit" className="w-100 custom-button">
               Login
             </Button>
 
             <div className="text-center mt-3">
               <p className="mb-0">
-                Don't have an account? <Link to={'/register'}>Register</Link>
+                Don't have an account? <Link to={'/register'} className="custom-link">Register</Link>
               </p>
             </div>
 
             <div className="text-center">
               <p className="mb-0">
-                Are you the owner of a beauty center? <Link to={'/registerBeautyCenter'}>Click here</Link>
+                Are you the owner of a beauty center? <Link to={'/registerBeautyCenter'} className="custom-link">Click here</Link>
               </p>
             </div>
           </Form>

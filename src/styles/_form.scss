@@ -1,0 +1,73 @@
+
+.custom-input{
+    .input-group {
+    .form-control {
+      border-radius: 50px;
+      border: 1px solid $primary-color;
+      border-right: 0;
+      padding: 0.8rem;
+      
+      &:focus {
+       
+        box-shadow: none;  
+       
+      }
+    }
+  
+    .input-group-text {
+      background-color: white; 
+      border: 1px solid $primary-color;
+      border-top-right-radius: 50px; 
+      border-bottom-right-radius: 50px; 
+      border-left: 0; 
+      color: $primary-color; 
+      padding: 0.8rem;
+    }
+  
+   
+    
+  }}
+
+  
+  .custom-input-date {
+    .form-control {
+      border-radius: 50px;
+      border: 1px solid #e9516c; 
+      padding: 0.8rem;
+      
+  
+      &:focus {
+       
+        box-shadow:none; 
+      }
+
+      &::placeholder {
+        color: #595c5f !important;
+       
+      }
+  
+      
+  
+      &::-webkit-calendar-picker-indicator {
+        color: #e9516c; 
+       
+      }
+  
+      &::-webkit-input-placeholder {
+        color: #999; /* Colore del placeholder */
+      }
+  
+     
+    }
+  }
+
+
+
+
+
+
+ 
+
+  
+  
+  

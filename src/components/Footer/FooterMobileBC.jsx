@@ -8,26 +8,26 @@ const FooterMobileBC = () => {
     <Container fluid className="bg-dark text-white p-3 d-block d-lg-none">
       <Row className="d-flex justify-content-between text-center">
         <Col xs={3} md={2} className="text-center">
-          <Link to={'/home'} className="text-white">
-            <FaStar size={30} />
+          <Link to={'/home'} className="custom-link-ft">
+            <FaStar size={30} className="mb-2"/>
             <div>Home</div>
           </Link>
         </Col>
         <Col xs={3} md={2} className="text-center">
-          <Link to={'/clients'} className="text-white">
-            <FaAddressBook size={30} />
+          <Link to={'/clients'} className="custom-link-ft">
+            <FaAddressBook size={30} className="mb-2"/>
             <div>Clients</div>
           </Link>
         </Col>
         <Col xs={3} md={2} className="text-center">
-          <Link to={'/resBeautyCenter'} className="text-white">
-            <FaCalendarAlt size={30} />
+          <Link to={'/resBeautyCenter'} className="custom-link-ft">
+            <FaCalendarAlt size={30} className="mb-2"/>
             <div>Reservations</div>
           </Link>
         </Col>
         <Col xs={3} md={2} className="text-center">
-          <Link to={'/profileBeautyCenter'} className="text-white">
-            <FaUser size={30} />
+          <Link to={'/profileBeautyCenter'} className="custom-link-ft">
+            <FaUser size={30} className="mb-2"/>
             <div>Profile</div>
           </Link>
         </Col>

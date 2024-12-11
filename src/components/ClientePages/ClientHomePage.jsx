@@ -17,6 +17,72 @@ import {
   postPrenotazioni,
 } from "../../redux/actions/prenotazioniActions";
 
+import Select from 'react-select';
+
+const options = [
+  { value: 'SKIN_CARE_TREATMENTS', label: 'SKIN CARE TREATMENTS' },
+  { value: 'BODY_TREATMENTS', label: 'BODY TREATMENTS' },
+  { value: 'HAIR_REMOVAL_SERVICES', label: 'HAIR REMOVAL SERVICES' },
+  { value: 'NAIL_AND_HAND_CARE', label: 'NAIL AND HAND CARE' },
+  { value: 'ANTI_AGING_AND_REJUVENATION', label: 'ANTI AGING AND REJUVENATION' },
+  { value: 'MAKEUP_AND_COSMETIC_ENHANCEMENTS', label: 'MAKEUP AND COSMETIC ENHANCEMENTS' },
+];
+
+const treatments = [
+  { value: 'SKIN_CARE_TREATMENTS', label: 'SKIN CARE TREATMENTS', image: 'https://plus.unsplash.com/premium_photo-1679046948909-ab47e96082e7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2tpbmNhcmV8ZW58MHx8MHx8fDA%3D' },
+  { value: 'BODY_TREATMENTS', label: 'BODY TREATMENTS', image: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9keSUyMHRyZWF0bWVudHN8ZW58MHx8MHx8fDA%3D' },
+  { value: 'HAIR_REMOVAL_SERVICES', label: 'HAIR REMOVAL SERVICES', image: 'https://plus.unsplash.com/premium_photo-1664187387097-3bc0d6275fa1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZGVwaWxhemlvbmV8ZW58MHx8MHx8fDA%3D' },
+  { value: 'NAIL_AND_HAND_CARE', label: 'NAIL AND HAND CARE', image: 'https://images.unsplash.com/photo-1599206676335-193c82b13c9e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG5haWx8ZW58MHx8MHx8fDA%3D' },
+  { value: 'ANTI_AGING_AND_REJUVENATION', label: 'ANTI AGING AND REJUVENATION', image: 'https://plus.unsplash.com/premium_photo-1679106767239-95b814bf9795?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGNyZW1hfGVufDB8fDB8fHww' },
+  { value: 'MAKEUP_AND_COSMETIC_ENHANCEMENTS', label: 'MAKEUP AND COSMETIC ENHANCEMENTS', image: 'https://images.unsplash.com/photo-1620464003286-a5b0d79f32c2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fG1ha2V1cHxlbnwwfHwwfHx8MA%3D%3D' },
+];
+
+const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      borderRadius: '50px',
+      borderColor: '#e9516c', 
+      padding: '0.4rem',
+      boxShadow: 'none', 
+      '&:hover': {
+        borderColor: '#e9516c', 
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: '5px',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)', 
+      backgroundColor: '#f9f9f9',
+    }),
+    option: (provided,state ) => ({
+      ...provided,
+      backgroundColor: state.isSelected
+      ? '#e9516c' 
+      : state.isFocused
+      ? '#f2d1d9' 
+      : 'transparent', 
+      transition: 'none', 
+      '&:active': {
+        backgroundColor: '#e9516c', 
+      },
+      
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: '#595C5F', 
+    }),
+    dropdownIndicator: (provided) => ({
+      ...provided,
+    color:'#e9516c',
+    '&:hover': {
+        color: '#e9516c', 
+      },
+    }),
+    indicatorSeparator: () => ({
+      display: 'none', 
+    }),
+  };
+
 const ClientHomePage = () => {
   const dispatch = useDispatch();
 
@@ -27,7 +93,7 @@ const ClientHomePage = () => {
   const preferiti = useSelector((state) => state.preferiti.preferiti);
   const error = useSelector((state) => state.home.error);
 
-  // Funzione per ottenere le ore disponibili per la prenotazione
+  
   const getAvailableHours = () => {
     const hours = [];
     for (let hour = 9; hour <= 17; hour++) {
@@ -37,7 +103,7 @@ const ClientHomePage = () => {
     const today = new Date();
     const selectedDate = new Date(searchData.dataPrenotazione);
 
-    // Se la data selezionata è oggi, mostra solo le ore future
+    
     if (
       selectedDate.getDate() === today.getDate() &&
       selectedDate.getMonth() === today.getMonth() &&
@@ -50,63 +116,67 @@ const ClientHomePage = () => {
       });
     }
 
-    return hours; // Altrimenti, tutte le ore sono disponibili
+    return hours; 
   };
 
-  // Effetto per ottenere i preferiti dell'utente quando il componente è montato
+  
   useEffect(() => {
     if (accessToken) {
       dispatch(getPreferiti(accessToken));
     }
   }, [dispatch, accessToken]);
 
-  // Effetto per eseguire la ricerca quando i dati di ricerca sono completi
+  
   useEffect(() => {
     if (searchData.dataPrenotazione && searchData.trattamento && searchData.citta) {
       setSearchPerformed(true);
-      dispatch(ricerca(searchData, accessToken)); // Chiamata API per la ricerca
+      dispatch(ricerca(searchData, accessToken)); 
     }
   }, [searchData, dispatch, accessToken]);
 
-  // Reset dell'errore quando il componente viene smontato
+ 
   useEffect(() => {
     return () => {
       dispatch(resetError());
     };
   }, [dispatch]);
 
-  // Funzione per chiudere l'errore
+  
   const handleCloseError = () => {
     dispatch(resetError());
   };
 
-  // Funzione per gestire il cambiamento dei campi nel form
+  
   const handleChange = (e) => {
     const { id, value } = e.target;
     dispatch(setFieldSearch({ id, value }));
   };
 
-  // Funzione per aggiungere o rimuovere dai preferiti
+  const handleSelectChange = (selectedOption) => {
+    dispatch(setFieldSearch({ id: 'trattamento', value: selectedOption ? selectedOption.value : '' }));
+};
+
+  
   const handleToggleFavorite = (item) => {
     const isFavorite = preferiti.find((fav) => fav.centroEstetico.id === item.id);
 
     if (isFavorite) {
-      dispatch(deletePreferiti(accessToken, isFavorite.id)); // Rimuove dai preferiti
+      dispatch(deletePreferiti(accessToken, isFavorite.id)); 
     } else {
-      dispatch(postPreferiti(accessToken, item)); // Aggiunge ai preferiti
+      dispatch(postPreferiti(accessToken, item)); 
     }
   };
 
-  // Funzione per salvare la prenotazione
+  
   const handleSaveRes = async (item, orario) => {
-    const data = searchData.dataPrenotazione + "T" + orario + ":00"; // Formatta la data
+    const data = searchData.dataPrenotazione + "T" + orario + ":00"; 
     const result = await dispatch(postPrenotazioni(accessToken, item, data));
     if (result) {
-      dispatch(ricerca(searchData, accessToken)); // Ricarica i risultati dopo la prenotazione
+      dispatch(ricerca(searchData, accessToken)); 
     }
   };
 
-  // Verifica se i dati di ricerca sono validi
+  
   const isSearchValid =
     searchData.dataPrenotazione &&
     searchData.trattamento &&
@@ -114,46 +184,34 @@ const ClientHomePage = () => {
 
   return (
     <Container fluid className="p-4">
-      {/* Se c'è un errore, mostra un messaggio di errore */}
+    
       {error && error.message && (
         <Alert variant="danger" dismissible onClose={handleCloseError}>
           <strong>{error.message}</strong>
         </Alert>
       )}
 
-      {/* Form di ricerca */}
+    
       <Form id="search-form">
         <Row className="mb-4">
           <Col xs={12}>
             <Form.Group controlId="trattamento" className="mb-3">
-              <InputGroup>
-                <InputGroup.Text>
-                  <FaSearch />
-                </InputGroup.Text>
-                <Form.Select
-                  aria-label="Seleziona un trattamento"
-                  value={searchData.trattamento}
-                  onChange={handleChange}
-                >
-                  <option value="">Treatments</option>
-                  <option value="SKIN_CARE_TREATMENTS">SKIN CARE TREATMENTS</option>
-                  <option value="BODY_TREATMENTS">BODY TREATMENTS</option>
-                  <option value="HAIR_REMOVAL_SERVICES">HAIR REMOVAL SERVICES</option>
-                  <option value="NAIL_AND_HAND_CARE">NAIL AND HAND CARE</option>
-                  <option value="ANTI_AGING_AND_REJUVENATION">ANTI AGING AND REJUVENATION</option>
-                  <option value="MAKEUP_AND_COSMETIC_ENHANCEMENTS">
-                    MAKEUP AND COSMETIC ENHANCEMENTS
-                  </option>
-                </Form.Select>
-              </InputGroup>
+              
+               
+              <Select
+                                options={options}
+                                styles={customStyles}
+                                placeholder="Treatments"
+                                onChange={handleSelectChange}
+                                value={options.find((option) => option.value === searchData.trattamento)}
+                            />
+             
             </Form.Group>
           </Col>
           <Col xs={12} md={6}>
-            <Form.Group className="mb-3" controlId="citta">
+            <Form.Group className="mb-3 custom-input" controlId="citta">
               <InputGroup>
-                <InputGroup.Text>
-                  <FaMapMarkerAlt />
-                </InputGroup.Text>
+                
                 <Form.Control
                   type="text"
                   placeholder="City"
@@ -161,11 +219,15 @@ const ClientHomePage = () => {
                   onChange={handleChange}
                   required
                 />
+                 <InputGroup.Text>
+                  <FaMapMarkerAlt />
+                </InputGroup.Text>
               </InputGroup>
+             
             </Form.Group>
           </Col>
           <Col xs={12} md={6}>
-            <Form.Group className="mb-3" controlId="dataPrenotazione">
+            <Form.Group className="mb-3 custom-input-date" controlId="dataPrenotazione">
               <InputGroup>
                 <Form.Control
                   type="date"
@@ -180,30 +242,34 @@ const ClientHomePage = () => {
       </Form>
 
       <Row className="g-4">
-        {/* Se la ricerca non è stata effettuata o è invalida, mostra schede statiche */}
-        {!isSearchValid || !searchPerformed ? (
-          [1, 2, 3, 4, 5, 6].map((key) => (
-            <Col xs={12} md={6} xl={4} key={key}>
-              <Card className="text-bg-dark">
+       
+        {!isSearchValid || !searchPerformed ? ( 
+          <>
+
+          {treatments.map((treatment) => (
+            <Col xs={12} md={6} xl={4} key={treatment.value}>
+              <Card className="custom-static-card">
                 <Card.Img
                   variant="top"
-                  src={`https://via.placeholder.com/150?text=Card+${key}`}
-                  alt={`Card ${key}`}
+                  src={treatment.image}
+                  alt={treatment.label}
+                  className="w-100 h-100"
                 />
                 <Card.ImgOverlay>
-                  <Card.Title>{`Static Card ${key}`}</Card.Title>
+                  <Card.Title>{treatment.label}</Card.Title>
                 </Card.ImgOverlay>
               </Card>
             </Col>
-          ))
+          ))}
+          </>
         ) : new Date(searchData.dataPrenotazione) < new Date().setHours(0, 0, 0, 0) ? (
-          // Se la data selezionata è passata, mostra un messaggio più appropriato
+        
           <Col xs={12}>
             <p>The selected date is in the past. Please choose a future date to make a booking.</p>
           </Col>
 
         ) : result.length > 0 ? (
-          // Mostra i risultati della ricerca se esistono
+         
           result.map((item) => {
             const prenotati = new Set(
               item.disponibilita
@@ -216,7 +282,7 @@ const ClientHomePage = () => {
 
             return (
               <Col xs={12} md={6} xl={4} key={item.id}>
-                <Card className="mb-3" style={{ maxWidth: "100%" }}>
+                <Card className="mb-3 custom-card" style={{ maxWidth: "100%" }}>
                   <div
                     className="d-flex justify-content-end position-absolute p-2"
                     style={{ top: "0", right: "0" }}
@@ -243,13 +309,14 @@ const ClientHomePage = () => {
                         availableHours.map((hour, index) => (
                           <ListGroup.Item
                             key={index}
-                            className="d-flex justify-content-between align-items-center"
+                            className="d-flex justify-content-between align-items-center custom-color-bg"
                           >
                             <span>{hour}</span>
                             <Button
                               variant="primary"
                               size="sm"
                               onClick={() => handleSaveRes(item, hour)}
+                              className="custom-button-ds"
                             >
                               Book
                             </Button>
@@ -265,7 +332,7 @@ const ClientHomePage = () => {
             );
           })
         ) : (
-          // Messaggio di nessun risultato trovato
+          
           <Col xs={12}>
             <p>No results found</p>
           </Col>

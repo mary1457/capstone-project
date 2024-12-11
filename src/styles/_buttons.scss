@@ -1,0 +1,49 @@
+.custom-button {
+    color: white;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem;
+    cursor: pointer;
+    
+  
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+
+    &:focus {
+        background-color:$primary-color !important;
+      }
+
+      &:active {
+        background-color: $primary-color !important;
+      }
+
+   
+  }
+
+  .custom-button-ds {
+    color: white;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 5px;
+    padding: 0.4rem;
+    cursor: pointer;
+    
+  
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+
+    &:focus {
+        background-color:$primary-color !important;
+      }
+
+      &:active {
+        background-color: $primary-color !important;
+      }
+
+   
+  }
+  
+  

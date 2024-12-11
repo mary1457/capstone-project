@@ -18,6 +18,8 @@ import BeautyCenterClientsPage from './components/CentroEsteticoPages/BeautyCent
 import BeautyCenterResPage from './components/CentroEsteticoPages/BeautyCenterResPage';
 import BeautyCenterProfilePage from './components/CentroEsteticoPages/BeautyCenterProfilePage';
 
+import './App.css';
+
 function App() {
   const [userType, setUserType] = useState(localStorage.getItem("userType") || sessionStorage.getItem("userType"));
   const [accessToken, setAccessToken] = useState(localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken"));

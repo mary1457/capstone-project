@@ -50,21 +50,21 @@ function UtenteHome() {
   return (
     <>
       {/* Header */}
-      <Row className="bg-primary text-white text-center p-3">
+      <Row className="text-white text-center p-3 custom-header">
         <Col>
-          <h1>{userType === 'cliente' ? "Client Dashboard" : "Beauty Center Dashboard"}</h1>
+          <h1>GlowBook</h1>
         </Col>
       </Row>
 
       {/* Body */}
       <Row className="flex-grow-1">
         {/* Contenuto centrale */}
-        <Col xs={12} lg={9} xl={10} className="bg-light p-3">
+        <Col xs={12} lg={9} xl={10} className=" p-3">
           <Outlet /> {/* Rotte nidificate */}
         </Col>
 
         {/* Sidebar destra */}
-        <Col xs={12} lg={3} xl={2} className="bg-secondary text-white p-3 d-none d-lg-block">
+        <Col xs={12} lg={3} xl={2} className=" text-white p-3 d-none d-lg-block custom-sidebar">
           {renderSidebar()}
         </Col>
       </Row>

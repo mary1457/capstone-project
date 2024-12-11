@@ -45,7 +45,7 @@ const RegisterForm = () => {
       {result && result.message && (
   <Alert variant="success" dismissible>
     <strong>{result.message}</strong> 
-    <Button variant="link" className="btn-close" onClick={handleClose} aria-label="Close" />
+    <Button variant="link" className="btn-close" onClick={handleClose} aria-label="Close"  />
   </Alert>
 )}
 
@@ -55,12 +55,12 @@ const RegisterForm = () => {
   </Alert>
 )}
 
-        <div className="p-4 border rounded shadow">
+        <div className="p-4 custom-border">
           <h1 className="text-center text-dark mb-4">Register</h1>
           
           <Form id="register-form" onSubmit={handleSubmit}>
             
-            <Form.Group className="mb-3" controlId="nome">
+            <Form.Group className="mb-3 custom-input" controlId="nome">
               <InputGroup>
                 <Form.Control
                   type="text"
@@ -75,7 +75,7 @@ const RegisterForm = () => {
               </InputGroup>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="cognome">
+            <Form.Group className="mb-3 custom-input" controlId="cognome">
               <InputGroup>
                 <Form.Control
                   type="text"
@@ -90,7 +90,7 @@ const RegisterForm = () => {
               </InputGroup>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="email">
+            <Form.Group className="mb-3 custom-input" controlId="email">
               <InputGroup>
                 <Form.Control
                   type="email"
@@ -105,7 +105,7 @@ const RegisterForm = () => {
               </InputGroup>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="password">
+            <Form.Group className="mb-3 custom-input" controlId="password">
               <InputGroup>
                 <Form.Control
                   type="password"
@@ -120,7 +120,7 @@ const RegisterForm = () => {
               </InputGroup>
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100 mb-2">
+            <Button variant="primary" type="submit" className="w-100 custom-button">
               Register
             </Button>
 

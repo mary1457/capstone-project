@@ -9,72 +9,72 @@ const ClientResPage = () => {
   const dispatch = useDispatch();
   const prenotazioni = useSelector((state) => state.prenotazioni.prenotazioni);
   const accessToken = useSelector((state) => state.accessToken.accessToken);
-  const error = useSelector((state) => state.prenotazioni.error); // Stato dell'errore
-  const [loading, setLoading] = useState(true); // Stato per il caricamento
+  const error = useSelector((state) => state.prenotazioni.error); 
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
 
-  // Recupera le prenotazioni quando il componente viene montato
+  
   useEffect(() => {
     if (accessToken) {
       dispatch(getPrenotazioni(accessToken));
     }
   }, [dispatch, accessToken]);
 
-  // Quando le prenotazioni o l'errore cambiano, aggiorniamo lo stato di caricamento
+  
   useEffect(() => {
     if (error) {
-      setLoading(false); // Fermiamo il caricamento se c'è un errore
+      setLoading(false); 
     } else if (prenotazioni.length > 0) {
-      setLoading(false); // Fermiamo il caricamento se ci sono prenotazioni
+      setLoading(false); 
     }
-  }, [prenotazioni, error]); // Dipende dai preferiti e dall'errore
+  }, [prenotazioni, error]); 
 
-  // Funzione per rimuovere una prenotazione
+  
   const handleDelete = (id) => {
-    setLoading(true); // Iniziamo il caricamento quando si rimuove una prenotazione
+    setLoading(true); 
     dispatch(deletePrenotazioni(accessToken, id));
   };
 
-  // Funzione per chiudere l'errore
+ 
   const handleCloseError = () => {
     dispatch(resetError());
   };
 
   useEffect(() => {
     return () => {
-      dispatch(resetError()); // Pulisce l'errore quando il componente viene smontato
+      dispatch(resetError()); 
     };
   }, [dispatch]);
 
-  // Ordinamento delle prenotazioni in base alla data
+  
   const sortedPrenotazioni = prenotazioni
     ? [...prenotazioni].sort((a, b) => new Date(b.data) - new Date(a.data))
     : [];
 
-  // Funzione per verificare se una prenotazione è futura
+ 
   const isFutureReservation = (date) => new Date(date) >= new Date();
 
   return (
     <Container fluid className="p-4">
-      {/* Mostriamo un messaggio di errore se presente */}
+   
       {error && error.message && (
         <Alert variant="danger" dismissible onClose={handleCloseError}>
           <strong>{error.message}</strong>
         </Alert>
       )}
 
-      {/* Mostriamo lo spinner di caricamento se in fase di recupero dati */}
+    
       {loading ? (
         <Row className="justify-content-center">
           <Spinner animation="border" variant="primary" />
         </Row>
       ) : (
         <Row className="g-4">
-          {/* Se ci sono prenotazioni, le mostriamo, altrimenti un messaggio che non ci sono prenotazioni */}
+       
           {sortedPrenotazioni && sortedPrenotazioni.length > 0 ? (
             sortedPrenotazioni.map((res) => (
               <Col xs={12} key={res.id}>
-                <Card style={{ width: '100%' }}>
+                <Card style={{ width: '100%' }} className='custom-card'>
                   <Card.Body>
                     <Card.Title>{res.centroEstetico.trattamento.replace(/_/g, ' ')}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
@@ -87,7 +87,7 @@ const ClientResPage = () => {
                       {res.centroEstetico.indirizzo}, {res.centroEstetico.citta}
                     </Card.Text>
 
-                    {/* Mostriamo il pulsante di eliminazione solo per le prenotazioni future */}
+                  
                     {isFutureReservation(res.data) && (
                       <div className="d-flex justify-content-end mt-2">
                         <Button
@@ -105,7 +105,7 @@ const ClientResPage = () => {
             ))
           ) : (
             <Col xs={12}>
-              {/* Messaggio quando non ci sono prenotazioni */}
+             
               <p>No reservations found</p>
             </Col>
           )}

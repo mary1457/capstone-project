@@ -11,25 +11,25 @@ const ClientSidebar = () => {
         <Col xs={3} className="p-3">
           <div className="d-flex flex-column align-items-start">
         
-            <Link to={'/home'} className="text-white d-flex align-items-center mb-3">
+            <Link to={'/home'} className=" d-flex align-items-center mb-3 custom-link-sb">
               <FaStar size={30} className="me-2" />
               <div>Home</div>
             </Link>
 
           
-            <Link to={'/fav'} className="text-white d-flex align-items-center mb-3">
+            <Link to={'/fav'} className=" d-flex align-items-center mb-3 custom-link-sb">
               <FaHeart size={30} className="me-2" />
               <div>Favorites</div>
             </Link>
 
           
-            <Link to={'/res'} className="text-white d-flex align-items-center mb-3">
+            <Link to={'/res'} className=" d-flex align-items-center mb-3 custom-link-sb">
               <FaCalendarAlt size={30} className="me-2" />
               <div>Reservations</div>
             </Link>
 
            
-            <Link to={'/profile'} className="text-white d-flex align-items-center">
+            <Link to={'/profile'} className=" d-flex align-items-center custom-link-sb">
               <FaUser size={30} className="me-2" />
               <div>Profile</div>
             </Link>

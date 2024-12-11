@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# capstone-project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descrizione del progetto
+GlowBook è una piattaforma digitale pensata per semplificare la prenotazione di servizi di bellezza e benessere, come trattamenti estetici e spa. L’applicazione consente agli utenti di trovare facilmente i migliori trattamenti vicino a loro, mentre offre ai professionisti uno strumento pratico per raggiungere nuovi clienti e gestire il proprio calendario di appuntamenti.
 
-## Available Scripts
+## Obiettivo del progetto
+Il progetto si pone come obiettivo principale:
+- **Per gli utenti**: rendere semplice e veloce la ricerca e la prenotazione di trattamenti di bellezza, migliorando l'accessibilità ai servizi di benessere.
+- **Per i professionisti**: offrire uno strumento digitale per gestire il proprio calendario di appuntamenti e aumentare la visibilità online.
 
-In the project directory, you can run:
+## Caratteristiche principali
+- **Ricerca rapida e geolocalizzata**: trova i servizi di bellezza in base alla città selezionata.
+- **Prenotazioni in tempo reale**: gestione rapida degli appuntamenti.
+- **Gestione utenti**: profili personalizzati per clienti e professionisti.
+- **Catalogo servizi**: visualizzazione di trattamenti e disponibilità.
 
-### `npm start`
+## Tecnologie utilizzate
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+- **Tecnologia**: React  
+  React verrà utilizzato per la creazione dell’interfaccia utente. La scelta è motivata dalla sua capacità di offrire:
+  - Esperienze interattive e fluide.
+  - Componenti riutilizzabili e scalabili.
+  - Compatibilità con dispositivi mobili grazie alla natura responsive.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Backend
+- **Tecnologia**: Spring Boot  
+  Il backend sarà sviluppato con Spring Boot per la gestione delle API RESTful. Questo framework garantirà:
+  - Esecuzione veloce e stabile.
+  - Facilità di integrazione con il database e servizi esterni.
+  - Gestione efficiente delle operazioni CRUD (Create, Read, Update, Delete).
 
-### `npm test`
+### Database
+- **Tecnologia**: PostgreSQL  
+  Per la gestione dei dati sarà utilizzato un database relazionale PostgreSQL, scelto per:
+  - Affidabilità e scalabilità.
+  - Ottima gestione delle transazioni.
+  - Supporto avanzato per query complesse.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installazione e configurazione
 
-### `npm run build`
+### Requisiti
+- **Node.js** per l'ambiente frontend (versione 16.x o superiore).
+- **Java JDK** per il backend (versione 11 o superiore).
+- **PostgreSQL** per il database.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installazione
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Clone del repository**:
+    git clone https://github.com/mary1457/capstone-project
+    cd capstone-project
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Configurazione frontend**:
+    - Accedi alla directory `frontend`.
+    - Installa le dipendenze con:
+      npm install
+    - Avvia il server di sviluppo:
+      npm start
 
-### `npm run eject`
+3. **Configurazione backend**:
+    - Accedi alla directory `backend`.
+    - Configura il file `application.properties` con le credenziali del database.
+    - Compila e avvia il backend.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. **Configurazione database**:
+    - Crea un database PostgreSQL chiamato `capstone-project-b`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

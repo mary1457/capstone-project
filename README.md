@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+GlowBook
+Descrizione del progetto
+GlowBook è una piattaforma digitale pensata per semplificare la prenotazione di servizi di bellezza e benessere, come trattamenti estetici e spa. L’applicazione consente agli utenti di trovare facilmente i migliori trattamenti vicino a loro, mentre offre ai professionisti uno strumento pratico per raggiungere nuovi clienti e gestire il proprio calendario di appuntamenti.
+Obiettivo del progetto
+Il progetto si pone come obiettivo principale:
+•	Per gli utenti: rendere semplice e veloce la ricerca e la prenotazione di trattamenti di bellezza, migliorando l'accessibilità ai servizi di benessere.
+•	Per i professionisti: offrire uno strumento digitale per gestire il proprio calendario di appuntamenti e aumentare la visibilità online.
+Caratteristiche principali
+•	Ricerca rapida e geolocalizzata: trova i servizi di bellezza in base alla città selezionata.
+•	Prenotazioni in tempo reale: gestione rapida degli appuntamenti.
+•	Gestione utenti: profili personalizzati per clienti e professionisti.
+•	Catalogo servizi: visualizzazione di trattamenti e disponibilità.
+Tecnologie utilizzate
+Frontend
+•	Tecnologia: React
+React verrà utilizzato per la creazione dell’interfaccia utente. La scelta è motivata dalla sua capacità di offrire:
+o	Esperienze interattive e fluide.
+o	Componenti riutilizzabili e scalabili.
+o	Compatibilità con dispositivi mobili grazie alla natura responsive.
+Backend
+•	Tecnologia: Spring Boot
+Il backend sarà sviluppato con Spring Boot per la gestione delle API RESTful. Questo framework garantirà:
+o	Esecuzione veloce e stabile.
+o	Facilità di integrazione con il database e servizi esterni.
+o	Gestione efficiente delle operazioni CRUD (Create, Read, Update, Delete).
+Database
+•	Tecnologia: PostgreSQL
+Per la gestione dei dati sarà utilizzato un database relazionale PostgreSQL, scelto per:
+o	Affidabilità e scalabilità.
+o	Ottima gestione delle transazioni.
+o	Supporto avanzato per query complesse.
+Installazione e configurazione
+Requisiti
+•	Node.js per l'ambiente frontend (versione 16.x o superiore).
+•	Java JDK per il backend (versione 11 o superiore).
+•	PostgreSQL per il database.
+Installazione
+1.	Clone del repository:
+git clone https://github.com/<username>/glowbook.git
+cd glowbook
+2.	Configurazione frontend:
+o	Accedi alla directory frontend.
+o	Installa le dipendenze con:
+npm install
+o	Avvia il server di sviluppo:
+npm start
+3.	Configurazione backend:
+o	Accedi alla directory backend.
+o	Configura il file application.properties con le credenziali del database.
+o	Compila e avvia il backend
+4.	Configurazione database:
+o	Crea un database PostgreSQL chiamato glowbook.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

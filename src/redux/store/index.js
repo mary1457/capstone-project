@@ -1,13 +1,15 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import utenteReducer from '../reducers/utenteReducer';
-import centroEsteticoReducer from '../reducers/centroEsteticoReducer';
-import accessTokenReducer from '../reducers/accessTokenReducer';
-import prenotazioniReducer from '../reducers/prenotazioniReducer';
-import clienteReducer from '../reducers/clienteReducer';
-import preferitiReducer from '../reducers/preferitiReducer';
-import homeReducer from '../reducers/homeReducer'; 
-import profiloReducer from '../reducers/profiloReducer'; 
+
+import centroEsteticoReducer from '../reducers/centroEsteticoReducer.js';
+import accessTokenReducer from '../reducers/accessTokenReducer.js';
+import prenotazioniReducer from '../reducers/prenotazioniReducer.js';
+import clienteReducer from '../reducers/clienteReducer.js';
+import preferitiReducer from '../reducers/preferitiReducer.js';
+import homeReducer from '../reducers/homeReducer.js'; 
+import profiloReducer from '../reducers/profiloReducer.js'; 
+import utenteReducer from '../reducers/utenteReducer.js';
+
 const bigReducer = combineReducers({
   accessToken: accessTokenReducer,
   utente: utenteReducer,

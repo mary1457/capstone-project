@@ -72,10 +72,10 @@ function UtenteHome() {
       {/* Footer */}
       <Row className="bg-dark text-white text-center p-3">
         <Col>
-        <footer className='position-sticky bottom-0 left-0 right-0'>
+       
           {renderFooter()}
           <FooterDesktop />
-          </footer>
+        
         </Col>
       </Row>
     </>

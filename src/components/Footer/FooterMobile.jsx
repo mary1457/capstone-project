@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const FooterMobile = () => {
   return (
+    <footer className='position-fixed bottom-0 left-0 right-0'>
     <Container fluid className="bg-dark text-white p-1 d-block d-lg-none">
       <Row className="d-flex justify-content-between text-center">
         <Col xs={3} md={2} className="text-center">
@@ -33,6 +34,7 @@ const FooterMobile = () => {
         </Col>
       </Row>
     </Container>
+    </footer>
   );
 };
 

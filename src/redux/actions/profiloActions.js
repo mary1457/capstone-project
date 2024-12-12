@@ -1,4 +1,4 @@
-const baseEndpoint = 'http://localhost:3001/user';
+const baseEndpoint = 'http://formidable-jacklin-mary1457-3c45e5ff.koyeb.app/user';
 
 export const SET_FIELD = "SET_FIELD";
 export const SET_ERROR = 'SET_ERROR';

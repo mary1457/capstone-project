@@ -1,4 +1,4 @@
-const baseEndpointFav = 'http://localhost:3001/fav';
+const baseEndpointFav = 'http://formidable-jacklin-mary1457-3c45e5ff.koyeb.app/fav';
 
 export const ADD_PREFERITI = 'ADD_PREFERITI';
 export const REMOVE_PREFERITI = 'REMOVE_PREFERITI';

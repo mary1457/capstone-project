@@ -1,4 +1,4 @@
-const baseEndpoint = 'http://localhost:3001/auth'; 
+const baseEndpoint = 'http://formidable-jacklin-mary1457-3c45e5ff.koyeb.app/auth'; 
 
 export const SET_FIELD_REGISTER = "SET_FIELD_REGISTER"; 
 export const SET_ERROR = "SET_ERROR"; 

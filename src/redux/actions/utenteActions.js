@@ -1,4 +1,4 @@
-const baseEndpoint = 'http://formidable-jacklin-mary1457-3c45e5ff.koyeb.app/auth';
+const baseEndpoint = 'https://formidable-jacklin-mary1457-3c45e5ff.koyeb.app/auth';
 
 export const SET_FIELD_LOGIN = "SET_FIELD_LOGIN";
 export const SET_ERROR = "SET_ERROR";

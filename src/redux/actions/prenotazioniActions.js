@@ -1,4 +1,4 @@
-const baseEndpoint = 'http://formidable-jacklin-mary1457-3c45e5ff.koyeb.app/res';
+const baseEndpoint = 'https://formidable-jacklin-mary1457-3c45e5ff.koyeb.app/res';
 
 export const GET_PRENOTAZIONI = "GET_PRENOTAZIONI"; 
 export const GET_TODAY = "GET_TODAY"; 

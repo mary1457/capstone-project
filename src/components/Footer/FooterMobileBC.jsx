@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const FooterMobileBC = () => {
   return (
-    <Container fluid className="bg-dark text-white p-3 d-block d-lg-none">
+    <Container fluid className="bg-dark text-white p-1 d-block d-lg-none">
       <Row className="d-flex justify-content-between text-center">
         <Col xs={3} md={2} className="text-center">
           <Link to={'/home'} className="custom-link-ft">
@@ -22,7 +22,7 @@ const FooterMobileBC = () => {
         <Col xs={3} md={2} className="text-center">
           <Link to={'/resBeautyCenter'} className="custom-link-ft">
             <FaCalendarAlt size={30} className="mb-2"/>
-            <div>Reservations</div>
+            <div>Res</div>
           </Link>
         </Col>
         <Col xs={3} md={2} className="text-center">

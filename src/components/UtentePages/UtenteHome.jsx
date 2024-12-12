@@ -72,8 +72,10 @@ function UtenteHome() {
       {/* Footer */}
       <Row className="bg-dark text-white text-center p-3">
         <Col>
+        <footer className='position-fixed bottom-0 '>
           {renderFooter()}
           <FooterDesktop />
+          </footer>
         </Col>
       </Row>
     </>

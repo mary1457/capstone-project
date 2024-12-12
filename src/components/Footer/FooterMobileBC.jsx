@@ -7,8 +7,8 @@ const FooterMobileBC = () => {
   return (
     <Container 
     fluid 
-    className="bg-dark text-white p-1 d-block d-lg-none position-fixed bottom-0 right-0" 
-    style={{ left: 0 }}
+    className="bg-dark text-white p-1 d-block d-lg-none " 
+   
   >
       <Row className="d-flex justify-content-between text-center">
         <Col xs={3} md={2} className="text-center">
